@@ -1,1 +1,97 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI Progress Tracker</title><link>https://martinsky999.github.io/en/</link><description>Recent content on AI Progress Tracker</description><generator>Hugo</generator><language>en-US</language><atom:link href="https://martinsky999.github.io/en/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI Progress Tracker</title><link>https://martinsky999.github.io/en/</link><description>Recent content on AI Progress Tracker</description><generator>Hugo</generator><language>en-US</language><lastBuildDate>Wed, 01 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/en/index.xml" rel="self" type="application/rss+xml"/><item><title>Announcements</title><link>https://martinsky999.github.io/en/announcements/</link><pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/announcements/</guid><description>&lt;h2 id="announcements">Announcements&lt;/h2>
+&lt;p>This page tracks major updates to the website and content system.&lt;/p>
+&lt;ul>
+&lt;li>2026-04-01: Navigation upgraded to multi-column mega menu.&lt;/li>
+&lt;li>2026-04-01: Added archive/search templates and SEO structured data.&lt;/li>
+&lt;/ul></description></item><item><title>Contact</title><link>https://martinsky999.github.io/en/contact/</link><pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/contact/</guid><description>&lt;h2 id="contact">Contact&lt;/h2>
+&lt;p>For collaboration, engineering discussion, or speaking inquiries, please reach out through:&lt;/p>
+&lt;ul>
+&lt;li>GitHub: &lt;a href="https://github.com/martinsky999">martinsky999&lt;/a>&lt;/li>
+&lt;li>Site issue/discussion channels&lt;/li>
+&lt;/ul>
+&lt;h2 id="topics">Topics&lt;/h2>
+&lt;p>Preferred topics:&lt;/p>
+&lt;ul>
+&lt;li>AI-native infrastructure&lt;/li>
+&lt;li>GPU scheduling and platform engineering&lt;/li>
+&lt;li>Open source ecosystem collaboration&lt;/li>
+&lt;/ul></description></item><item><title>Six Core Principles of AI-Native Infrastructure</title><link>https://martinsky999.github.io/en/blog/ai-native-infra-principles/</link><pubDate>Fri, 20 Mar 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/blog/ai-native-infra-principles/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>The term &amp;ldquo;AI-native infrastructure&amp;rdquo; has become increasingly common, but what does it actually mean to build infrastructure that is native to AI workloads? Having spent years working on cloud-native systems and now deeply embedded in AI infrastructure, I&amp;rsquo;ve identified six core principles that define truly AI-native infrastructure.&lt;/p>
+&lt;h2 id="1-substrate-compatible">1. Substrate-Compatible&lt;/h2>
+&lt;p>AI-native infrastructure doesn&amp;rsquo;t replace cloud-native systems — it extends them. Kubernetes remains the substrate. Container runtimes, service meshes, and observability stacks all continue to play their roles. What changes is the semantic layer on top.&lt;/p></description></item><item><title>GPU Virtualization in Kubernetes with HAMi</title><link>https://martinsky999.github.io/en/blog/gpu-virtualization-hami/</link><pubDate>Sun, 15 Mar 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/blog/gpu-virtualization-hami/</guid><description>&lt;h2 id="the-gpu-utilization-problem">The GPU Utilization Problem&lt;/h2>
+&lt;p>In most Kubernetes clusters running AI workloads, GPU utilization is surprisingly low. A common pattern: a team requests a full GPU for their inference service, but actual utilization hovers around 15-30%. The GPU is idle most of the time, waiting for requests.&lt;/p>
+&lt;p>This waste compounds at scale. In a cluster with 100 GPUs, if average utilization is 20%, you&amp;rsquo;re effectively wasting 80 GPUs worth of compute.&lt;/p></description></item><item><title>Deploying vLLM in Production: Lessons Learned</title><link>https://martinsky999.github.io/en/blog/vllm-production-deployment/</link><pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/blog/vllm-production-deployment/</guid><description>&lt;h2 id="why-vllm">Why vLLM?&lt;/h2>
+&lt;p>When we needed to serve large language models at scale, vLLM&amp;rsquo;s PagedAttention mechanism immediately stood out. Traditional attention implementations allocate the full KV cache upfront, leading to significant memory fragmentation. PagedAttention manages KV cache in fixed-size pages — like virtual memory for LLMs.&lt;/p>
+&lt;p>The result: up to 24x higher throughput compared to naive implementations.&lt;/p>
+&lt;h2 id="production-configuration">Production Configuration&lt;/h2>
+&lt;p>Here&amp;rsquo;s a battle-tested vLLM configuration for production:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">vllm&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">LLM&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">SamplingParams&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">llm&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">LLM&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Qwen/Qwen2.5-72B-Instruct&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tensor_parallel_size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># Spread across 4 GPUs&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">gpu_memory_utilization&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">0.90&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># Use 90% of VRAM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max_model_len&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">32768&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># Context window&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max_num_seqs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">256&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># Concurrent sequences&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">enable_chunked_prefill&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># Better latency/throughput tradeoff&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">quantization&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;awq&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># 4-bit quantization&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="kubernetes-deployment">Kubernetes Deployment&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">apps/v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Deployment&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">vllm-server&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">replicas&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">containers&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">vllm&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">vllm/vllm-openai:v0.6.0&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">args&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;--model&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;Qwen/Qwen2.5-72B-Instruct&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;--tensor-parallel-size&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;4&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;--gpu-memory-utilization&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;0.9&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">resources&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">limits&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">nvidia.com/gpu&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;4&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">memory&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;128Gi&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">env&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">HUGGING_FACE_HUB_TOKEN&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">valueFrom&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">secretKeyRef&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">hf-token&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">key&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">token&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="common-pitfalls">Common Pitfalls&lt;/h2>
+&lt;h3 id="1-oom-during-peak-load">1. OOM During Peak Load&lt;/h3>
+&lt;p>The fix: set &lt;code>gpu_memory_utilization&lt;/code> lower than you think (0.85 vs 0.90) and monitor KV cache hit rates.&lt;/p></description></item><item><title>MCP: The USB Standard for AI Context</title><link>https://martinsky999.github.io/en/blog/mcp-protocol-explained/</link><pubDate>Sat, 28 Feb 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/blog/mcp-protocol-explained/</guid><description>&lt;h2 id="the-context-integration-problem">The Context Integration Problem&lt;/h2>
+&lt;p>Every AI application developer faces the same challenge: connecting language models to external data sources, tools, and systems. Before MCP, every integration was custom:&lt;/p>
+&lt;ul>
+&lt;li>OpenAI function calling with custom schemas&lt;/li>
+&lt;li>LangChain tool definitions&lt;/li>
+&lt;li>Proprietary API formats per model provider&lt;/li>
+&lt;/ul>
+&lt;p>The result was a fragmented ecosystem where every AI application had to reimplement the same integrations.&lt;/p>
+&lt;h2 id="mcp-as-a-universal-protocol">MCP as a Universal Protocol&lt;/h2>
+&lt;p>Anthropic&amp;rsquo;s Model Context Protocol defines a standard client-server architecture for context exchange:&lt;/p></description></item><item><title>AI Native Infrastructure</title><link>https://martinsky999.github.io/en/book/ai-native-infrastructure/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/book/ai-native-infrastructure/</guid><description>&lt;h2 id="about-this-book">About This Book&lt;/h2>
+&lt;p>This handbook provides a comprehensive guide to building and operating AI-native infrastructure. It covers the full stack from hardware scheduling to application runtime design, with a focus on production-ready implementations.&lt;/p>
+&lt;h3 id="who-this-book-is-for">Who This Book Is For&lt;/h3>
+&lt;ul>
+&lt;li>Platform engineers building internal ML platforms&lt;/li>
+&lt;li>Infrastructure architects designing AI systems at scale&lt;/li>
+&lt;li>Technical leaders evaluating AI infrastructure investments&lt;/li>
+&lt;li>DevOps engineers extending cloud-native skills to AI workloads&lt;/li>
+&lt;/ul>
+&lt;h3 id="what-youll-learn">What You&amp;rsquo;ll Learn&lt;/h3>
+&lt;p>&lt;strong>Part 1: Foundations&lt;/strong>&lt;/p></description></item><item><title>About</title><link>https://martinsky999.github.io/en/about/</link><pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/about/</guid><description>&lt;h2 id="about-this-site">About This Site&lt;/h2>
+&lt;p>This site tracks progress in AI infrastructure, with a focus on practical engineering over theoretical speculation. Content covers:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>AI-Native Infrastructure&lt;/strong> — GPU scheduling, inference optimization, agent runtime design&lt;/li>
+&lt;li>&lt;strong>Cloud Native&lt;/strong> — Kubernetes, service mesh, platform engineering&lt;/li>
+&lt;li>&lt;strong>Open Source&lt;/strong> — Tools, frameworks, and community practices&lt;/li>
+&lt;/ul>
+&lt;h2 id="ai-oss-landscape">AI OSS Landscape&lt;/h2>
+&lt;p>The &lt;a href="https://martinsky999.github.io/en/ai/">AI OSS Landscape&lt;/a> is a curated directory of open-source AI projects, updated regularly. It covers agents, models, inference engines, vector databases, and the full ecosystem of AI tooling.&lt;/p></description></item><item><title>Content Analysis</title><link>https://martinsky999.github.io/en/analysis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/analysis/</guid><description/></item><item><title>归档</title><link>https://martinsky999.github.io/en/archives/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/archives/</guid><description>文章归档</description></item><item><title>搜索</title><link>https://martinsky999.github.io/en/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/search/</guid><description/></item></channel></rss>

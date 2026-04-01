@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mcp on AI 进展追踪</title><link>https://martinsky999.github.io/tags/mcp/</link><description>Recent content in Mcp on AI 进展追踪</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 28 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/tags/mcp/index.xml" rel="self" type="application/rss+xml"/><item><title>MCP: The USB Standard for AI Context</title><link>https://martinsky999.github.io/blog/mcp-protocol-explained/</link><pubDate>Sat, 28 Feb 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/blog/mcp-protocol-explained/</guid><description>&lt;h2 id="the-context-integration-problem">The Context Integration Problem&lt;/h2>
+&lt;p>Every AI application developer faces the same challenge: connecting language models to external data sources, tools, and systems. Before MCP, every integration was custom:&lt;/p>
+&lt;ul>
+&lt;li>OpenAI function calling with custom schemas&lt;/li>
+&lt;li>LangChain tool definitions&lt;/li>
+&lt;li>Proprietary API formats per model provider&lt;/li>
+&lt;/ul>
+&lt;p>The result was a fragmented ecosystem where every AI application had to reimplement the same integrations.&lt;/p>
+&lt;h2 id="mcp-as-a-universal-protocol">MCP as a Universal Protocol&lt;/h2>
+&lt;p>Anthropic&amp;rsquo;s Model Context Protocol defines a standard client-server architecture for context exchange:&lt;/p></description></item></channel></rss>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tutorials on AI 进展追踪</title><link>https://martinsky999.github.io/categories/tutorials/</link><description>Recent content in Tutorials on AI 进展追踪</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 15 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/categories/tutorials/index.xml" rel="self" type="application/rss+xml"/><item><title>AI Native Infrastructure</title><link>https://martinsky999.github.io/book/ai-native-infrastructure/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/book/ai-native-infrastructure/</guid><description>&lt;h2 id="about-this-book">About This Book&lt;/h2>
+&lt;p>This handbook provides a comprehensive guide to building and operating AI-native infrastructure. It covers the full stack from hardware scheduling to application runtime design, with a focus on production-ready implementations.&lt;/p>
+&lt;h3 id="who-this-book-is-for">Who This Book Is For&lt;/h3>
+&lt;ul>
+&lt;li>Platform engineers building internal ML platforms&lt;/li>
+&lt;li>Infrastructure architects designing AI systems at scale&lt;/li>
+&lt;li>Technical leaders evaluating AI infrastructure investments&lt;/li>
+&lt;li>DevOps engineers extending cloud-native skills to AI workloads&lt;/li>
+&lt;/ul>
+&lt;h3 id="what-youll-learn">What You&amp;rsquo;ll Learn&lt;/h3>
+&lt;p>&lt;strong>Part 1: Foundations&lt;/strong>&lt;/p></description></item></channel></rss>

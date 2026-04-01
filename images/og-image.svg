@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0f1e"/>
+
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(59,130,246,0.06)" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="glow" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e3a5f" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0a0f1e" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0" y1="0" x2="600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Glow orb -->
+  <circle cx="200" cy="315" r="300" fill="rgba(59,130,246,0.06)"/>
+
+  <!-- Logo icon -->
+  <rect x="80" y="80" width="56" height="56" rx="12" fill="#1a2234" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+  <text x="108" y="120" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="white">AI</text>
+
+  <!-- Site title -->
+  <text x="80" y="260" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="900" fill="url(#textGrad)">AI-Native</text>
+  <text x="80" y="340" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="900" fill="white">Infrastructure</text>
+
+  <!-- Description -->
+  <text x="80" y="400" font-family="Inter, system-ui, sans-serif" font-size="24" fill="rgba(148,163,184,0.9)">Tracking the evolution of AI-native infrastructure</text>
+
+  <!-- Tags -->
+  <rect x="80" y="450" width="180" height="36" rx="18" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.25)" stroke-width="1"/>
+  <text x="170" y="473" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#60a5fa">GPU Scheduling</text>
+
+  <rect x="276" y="450" width="160" height="36" rx="18" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.25)" stroke-width="1"/>
+  <text x="356" y="473" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#60a5fa">Inference</text>
+
+  <rect x="452" y="450" width="160" height="36" rx="18" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.25)" stroke-width="1"/>
+  <text x="532" y="473" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#60a5fa">Open Source</text>
+
+  <!-- URL -->
+  <text x="80" y="560" font-family="Inter, system-ui, sans-serif" font-size="18" fill="rgba(100,116,139,0.8)">martinsky999.github.io</text>
+
+  <!-- Right accent -->
+  <rect x="1100" y="0" width="4" height="630" fill="rgba(59,130,246,0.3)"/>
+</svg>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on 元知 AI</title><link>https://martinsky999.github.io/tags/kubernetes/</link><description>Recent content in Kubernetes on 元知 AI</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 15 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 原生基础设施</title><link>https://martinsky999.github.io/book/ai-native-infrastructure/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/book/ai-native-infrastructure/</guid><description>&lt;h2 id="关于本书">关于本书&lt;/h2>
+&lt;p>本手册系统介绍如何构建与运维 AI 原生基础设施，从硬件调度到应用运行时设计覆盖全栈，并强调可落地的生产实践。&lt;/p>
+&lt;h3 id="适合读者">适合读者&lt;/h3>
+&lt;ul>
+&lt;li>建设内部机器学习平台的平台工程师&lt;/li>
+&lt;li>设计大规模 AI 系统的基础设施架构师&lt;/li>
+&lt;li>评估 AI 基础设施投入的技术负责人&lt;/li>
+&lt;li>将云原生能力扩展到 AI 工作负载的运维与工程人员&lt;/li>
+&lt;/ul>
+&lt;h3 id="你将学到什么">你将学到什么&lt;/h3>
+&lt;p>&lt;strong>第一部分：基础&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>AI 原生基础设施的六项原则&lt;/li>
+&lt;li>AI 工作负载与传统云原生服务的差异&lt;/li>
+&lt;li>面向软件工程师的 GPU 硬件基础&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>第二部分：计算层&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>基于设备插件的 Kubernetes GPU 调度&lt;/li>
+&lt;li>HAMi 与 GPU 虚拟化&lt;/li>
+&lt;li>多租户 GPU 集群&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>第三部分：推理与服务&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>vLLM 与 PagedAttention&lt;/li>
+&lt;li>在 Kubernetes 上扩展推理&lt;/li>
+&lt;li>模型服务最佳实践&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>第四部分：Agent 运行时&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Agent 架构模式&lt;/li>
+&lt;li>记忆与状态管理&lt;/li>
+&lt;li>MCP 与上下文协议&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>第五部分：可观测性&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>AI 系统的指标体系&lt;/li>
+&lt;li>发现模型质量退化&lt;/li>
+&lt;li>GPU 工作负载的成本归因&lt;/li>
+&lt;/ul>
+&lt;h2 id="在线阅读">在线阅读&lt;/h2>
+&lt;p>本文为持续更新的活文档，会随领域演进补充章节。&lt;/p></description></item></channel></rss>

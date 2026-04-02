@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="280" viewBox="0 0 200 280" role="img" aria-label="AI在大前2">
+  <defs>
+    <linearGradient id="az2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="50%" stop-color="#c026d3"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+    <radialGradient id="az2g" cx="35%" cy="25%" r="60%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="200" height="280" rx="10" fill="url(#az2)"/>
+  <rect width="200" height="280" rx="10" fill="url(#az2g)"/>
+  <g transform="translate(100,118)">
+    <circle r="42" fill="#000" opacity="0.2"/>
+    <circle r="38" fill="none" stroke="#fff" stroke-width="3" opacity="0.95"/>
+    <polygon points="-12,-16 22,0 -12,16" fill="#fff" opacity="0.95"/>
+  </g>
+  <text x="100" y="52" text-anchor="middle" fill="#faf5ff" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="18" font-weight="800" letter-spacing="0.05em">AI</text>
+  <text x="100" y="78" text-anchor="middle" fill="#fae8ff" font-family="system-ui,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" font-weight="700">在大前</text>
+  <text x="100" y="200" text-anchor="middle" fill="#fce7f3" font-family="system-ui,sans-serif" font-size="28" font-weight="800" opacity="0.95">II</text>
+  <text x="100" y="248" text-anchor="middle" fill="#fbcfe8" font-family="system-ui,sans-serif" font-size="9" letter-spacing="0.25em">BILIBILI</text>
+</svg>

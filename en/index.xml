@@ -76,7 +76,7 @@
 &lt;/ul>
 &lt;p>The result was a fragmented ecosystem where every AI application had to reimplement the same integrations.&lt;/p>
 &lt;h2 id="mcp-as-a-universal-protocol">MCP as a Universal Protocol&lt;/h2>
-&lt;p>Anthropic&amp;rsquo;s Model Context Protocol defines a standard client-server architecture for context exchange:&lt;/p></description></item><item><title>AI Native Infrastructure</title><link>https://martinsky999.github.io/en/ai-foundations/ai-native-infrastructure/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/ai-native-infrastructure/</guid><description>&lt;h2 id="about-this-book">About This Book&lt;/h2>
+&lt;p>Anthropic&amp;rsquo;s Model Context Protocol defines a standard client-server architecture for context exchange:&lt;/p></description></item><item><title>AI Native Infrastructure</title><link>https://martinsky999.github.io/en/ai-foundations/machinelearning/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/machinelearning/</guid><description>&lt;h2 id="about-this-book">About This Book&lt;/h2>
 &lt;p>This handbook provides a comprehensive guide to building and operating AI-native infrastructure. It covers the full stack from hardware scheduling to application runtime design, with a focus on production-ready implementations.&lt;/p>
 &lt;h3 id="who-this-book-is-for">Who This Book Is For&lt;/h3>
 &lt;ul>
@@ -86,7 +86,13 @@
 &lt;li>DevOps engineers extending cloud-native skills to AI workloads&lt;/li>
 &lt;/ul>
 &lt;h3 id="what-youll-learn">What You&amp;rsquo;ll Learn&lt;/h3>
-&lt;p>&lt;strong>Part 1: Foundations&lt;/strong>&lt;/p></description></item><item><title>Content Analysis</title><link>https://martinsky999.github.io/en/ai-foundations/analysis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/analysis/</guid><description/></item><item><title>Large Model Fundamentals</title><link>https://martinsky999.github.io/en/ai-foundations/ai-infra-brief/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/ai-infra-brief/</guid><description>&lt;h2 id="recommended-reading-tech-essays">Recommended reading (Tech Essays)&lt;/h2>
+&lt;p>&lt;strong>Part 1: Foundations&lt;/strong>&lt;/p></description></item><item><title>AI Foundations</title><link>https://martinsky999.github.io/en/ai-foundations/guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/guide/</guid><description>&lt;p>This section gathers the handbook and related material. Start with the &lt;strong>AI Native Infrastructure&lt;/strong> handbook.&lt;/p>
+&lt;p>Quick entry:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://martinsky999.github.io/en/ai-foundations/MachineLearning/">AI Native Infrastructure (MachineLearning)&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://martinsky999.github.io/en/ai-foundations/DeepLearning/">Content Analysis (DeepLearning)&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://martinsky999.github.io/en/ai-foundations/LLM/">LLM&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Content Analysis</title><link>https://martinsky999.github.io/en/ai-foundations/deeplearning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/deeplearning/</guid><description/></item><item><title>Large Model Fundamentals</title><link>https://martinsky999.github.io/en/ai-foundations/llm/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/llm/</guid><description>&lt;h2 id="recommended-reading-tech-essays">Recommended reading (Tech Essays)&lt;/h2>
 &lt;ul>
 &lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/vllm-production-deployment/">Deploying vLLM in Production: Lessons Learned&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/mcp-protocol-explained/">MCP: The USB Standard for AI Context&lt;/a>&lt;/li>

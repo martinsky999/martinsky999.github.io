@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Fine-Tuning on 元知 AI</title><link>https://martinsky999.github.io/tags/fine-tuning/</link><description>Recent content in Fine-Tuning on 元知 AI</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 25 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/tags/fine-tuning/index.xml" rel="self" type="application/rss+xml"/><item><title>大模型原理</title><link>https://martinsky999.github.io/ai-foundations/llm/</link><pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/llm/</guid><description>&lt;h2 id="大模型的本质">大模型的本质&lt;/h2>
+&lt;p>大语言模型（Large Language Model, LLM）从根本上说是一个&lt;strong>下一词预测器&lt;/strong>：给定前面的 token 序列，预测下一个最可能的 token。&lt;/p>
+&lt;p>但当模型规模足够大（数十亿到数万亿参数）、训练数据足够多（数万亿 token）时，这个简单目标产生了涌现能力——推理、编程、翻译、创作……&lt;/p>
+&lt;h2 id="transformer大模型的基础架构">Transformer：大模型的基础架构&lt;/h2>
+&lt;p>所有主流大模型（GPT 系列、LLaMA、Claude、Gemini）都基于 Transformer 架构。其核心是&lt;strong>自注意力机制&lt;/strong>：&lt;/p>
+
+
+
+&lt;div class="goat svg-container ">
+ 
+ &lt;svg
+ xmlns="http://www.w3.org/2000/svg"
+ font-family="Menlo,Lucida Console,monospace"
+ 
+ viewBox="0 0 352 25"
+ >
+ &lt;g transform='translate(8,16)'>
+&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>A&lt;/text>
+&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>e&lt;/text>
+&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
+&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='48' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
+&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
+&lt;text text-anchor='middle' x='64' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
+&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>(&lt;/text>
+&lt;text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>Q&lt;/text>
+&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>,&lt;/text>
+&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>K&lt;/text>
+&lt;text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>,&lt;/text>
+&lt;text text-anchor='middle' x='128' y='4' fill='currentColor' style='font-size:1em'>V&lt;/text>
+&lt;text text-anchor='middle' x='136' y='4' fill='currentColor' style='font-size:1em'>)&lt;/text>
+&lt;text text-anchor='middle' x='152' y='4' fill='currentColor' style='font-size:1em'>=&lt;/text>
+&lt;text text-anchor='middle' x='168' y='4' fill='currentColor' style='font-size:1em'>s&lt;/text>
+&lt;text text-anchor='middle' x='176' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
+&lt;text text-anchor='middle' x='184' y='4' fill='currentColor' style='font-size:1em'>f&lt;/text>
+&lt;text text-anchor='middle' x='192' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='200' y='4' fill='currentColor' style='font-size:1em'>m&lt;/text>
+&lt;text text-anchor='middle' x='208' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
+&lt;text text-anchor='middle' x='216' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
+&lt;text text-anchor='middle' x='224' y='4' fill='currentColor' style='font-size:1em'>(&lt;/text>
+&lt;text text-anchor='middle' x='232' y='4' fill='currentColor' style='font-size:1em'>Q&lt;/text>
+&lt;text text-anchor='middle' x='240' y='4' fill='currentColor' style='font-size:1em'>K&lt;/text>
+&lt;text text-anchor='middle' x='248' y='4' fill='currentColor' style='font-size:1em'>ᵀ&lt;/text>
+&lt;text text-anchor='middle' x='264' y='4' fill='currentColor' style='font-size:1em'>/&lt;/text>
+&lt;text text-anchor='middle' x='280' y='4' fill='currentColor' style='font-size:1em'>√&lt;/text>
+&lt;text text-anchor='middle' x='288' y='4' fill='currentColor' style='font-size:1em'>d&lt;/text>
+&lt;text text-anchor='middle' x='296' y='4' fill='currentColor' style='font-size:1em'>ₖ&lt;/text>
+&lt;text text-anchor='middle' x='304' y='4' fill='currentColor' style='font-size:1em'>)&lt;/text>
+&lt;text text-anchor='middle' x='320' y='4' fill='currentColor' style='font-size:1em'>·&lt;/text>
+&lt;text text-anchor='middle' x='336' y='4' fill='currentColor' style='font-size:1em'>V&lt;/text>
+&lt;/g>
+
+ &lt;/svg>
+ 
+&lt;/div>
+&lt;p>每个 token 通过&amp;quot;查询（Q）&amp;ldquo;与所有其他 token 的&amp;quot;键（K）&amp;ldquo;计算相关性分数，再用这个分数对&amp;quot;值（V）&amp;ldquo;加权求和。这让模型可以直接捕捉任意距离的依赖关系。&lt;/p>
+&lt;h3 id="解码器架构decoder-only">解码器架构（Decoder-only）&lt;/h3>
+&lt;p>GPT、LLaMA 等生成式模型使用纯解码器架构：&lt;/p>
+&lt;ul>
+&lt;li>每次只能看到自己左侧的 token（&lt;strong>因果注意力&lt;/strong>）&lt;/li>
+&lt;li>自回归生成：一次生成一个 token，再将其加入上下文&lt;/li>
+&lt;/ul>
+&lt;h2 id="训练三阶段">训练三阶段&lt;/h2>
+&lt;h3 id="1-预训练pre-training">1. 预训练（Pre-training）&lt;/h3>
+&lt;p>在海量无标注文本上训练，学习语言的统计规律。&lt;/p></description></item></channel></rss>

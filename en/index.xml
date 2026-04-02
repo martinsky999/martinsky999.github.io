@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yuanzhi AI</title><link>https://martinsky999.github.io/en/</link><description>Recent content on Yuanzhi AI</description><generator>Hugo</generator><language>en-US</language><lastBuildDate>Wed, 01 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/en/index.xml" rel="self" type="application/rss+xml"/><item><title>Announcements</title><link>https://martinsky999.github.io/en/about/announcements/</link><pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/about/announcements/</guid><description>&lt;h2 id="announcements">Announcements&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yuanzhi AI</title><link>https://martinsky999.github.io/en/</link><description>Recent content on Yuanzhi AI</description><generator>Hugo</generator><language>en-US</language><lastBuildDate>Wed, 01 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/en/index.xml" rel="self" type="application/rss+xml"/><item><title>Learning Guide</title><link>https://martinsky999.github.io/en/ai-foundations/guide/</link><pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/guide/</guid><description>&lt;p>This section is designed for developers with an engineering background. The goal is to systematically organize the core knowledge required in the AI era. Content is organized around two main threads: &lt;strong>theoretical foundations&lt;/strong> (Machine Learning → Deep Learning → LLM internals) and &lt;strong>engineering practice&lt;/strong> (AI-native infrastructure).&lt;/p>
+&lt;h2 id="why-this-guide">Why This Guide?&lt;/h2>
+&lt;p>AI knowledge is exploding, but most introductory materials fall into two extremes: either too academic (full of math proofs) or too shallow (just calling APIs). This section aims to take an &lt;strong>engineer&amp;rsquo;s perspective&lt;/strong> — selecting and organizing content by the standard of &amp;ldquo;can be deployed, can be reproduced.&amp;rdquo;&lt;/p></description></item><item><title>Machine Learning Fundamentals</title><link>https://martinsky999.github.io/en/ai-foundations/machinelearning/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/machinelearning/</guid><description>&lt;h2 id="what-is-machine-learning">What is Machine Learning?&lt;/h2>
+&lt;p>Machine Learning (ML) is the core sub-field of AI. Its central idea is: &lt;strong>let computers automatically learn patterns from data, without humans explicitly programming every rule&lt;/strong>.&lt;/p>
+&lt;p>Unlike traditional programming where &amp;ldquo;rules + data → answers&amp;rdquo;, machine learning works the other way: &amp;ldquo;data + answers → rules.&amp;rdquo;&lt;/p>
+&lt;h2 id="three-learning-paradigms">Three Learning Paradigms&lt;/h2>
+&lt;h3 id="supervised-learning">Supervised Learning&lt;/h3>
+&lt;p>Training data has labels; the model learns a mapping from inputs to outputs.&lt;/p>
+&lt;p>&lt;strong>Typical tasks:&lt;/strong> Classification (spam detection), Regression (price prediction)&lt;/p></description></item><item><title>Deep Learning Core</title><link>https://martinsky999.github.io/en/ai-foundations/deeplearning/</link><pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/deeplearning/</guid><description>&lt;h2 id="from-neurons-to-neural-networks">From Neurons to Neural Networks&lt;/h2>
+&lt;p>The basic unit of deep learning is the &lt;strong>artificial neuron&lt;/strong>: it receives multiple inputs, computes a weighted sum, passes it through an activation function, and produces an output.&lt;/p>
+
+
+
+&lt;div class="goat svg-container ">
+ 
+ &lt;svg
+ xmlns="http://www.w3.org/2000/svg"
+ font-family="Menlo,Lucida Console,monospace"
+ 
+ viewBox="0 0 400 25"
+ >
+ &lt;g transform='translate(8,16)'>
+&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
+&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>u&lt;/text>
+&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>p&lt;/text>
+&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>u&lt;/text>
+&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>=&lt;/text>
+&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
+&lt;text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>c&lt;/text>
+&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='96' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
+&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>v&lt;/text>
+&lt;text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
+&lt;text text-anchor='middle' x='120' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='128' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
+&lt;text text-anchor='middle' x='136' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
+&lt;text text-anchor='middle' x='144' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
+&lt;text text-anchor='middle' x='152' y='4' fill='currentColor' style='font-size:1em'>(&lt;/text>
+&lt;text text-anchor='middle' x='160' y='4' fill='currentColor' style='font-size:1em'>w&lt;/text>
+&lt;text text-anchor='middle' x='168' y='4' fill='currentColor' style='font-size:1em'>₁&lt;/text>
+&lt;text text-anchor='middle' x='176' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
+&lt;text text-anchor='middle' x='184' y='4' fill='currentColor' style='font-size:1em'>₁&lt;/text>
+&lt;text text-anchor='middle' x='200' y='4' fill='currentColor' style='font-size:1em'>+&lt;/text>
+&lt;text text-anchor='middle' x='216' y='4' fill='currentColor' style='font-size:1em'>w&lt;/text>
+&lt;text text-anchor='middle' x='224' y='4' fill='currentColor' style='font-size:1em'>₂&lt;/text>
+&lt;text text-anchor='middle' x='232' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
+&lt;text text-anchor='middle' x='240' y='4' fill='currentColor' style='font-size:1em'>₂&lt;/text>
+&lt;text text-anchor='middle' x='256' y='4' fill='currentColor' style='font-size:1em'>+&lt;/text>
+&lt;text text-anchor='middle' x='304' y='4' fill='currentColor' style='font-size:1em'>+&lt;/text>
+&lt;text text-anchor='middle' x='320' y='4' fill='currentColor' style='font-size:1em'>w&lt;/text>
+&lt;text text-anchor='middle' x='328' y='4' fill='currentColor' style='font-size:1em'>ₙ&lt;/text>
+&lt;text text-anchor='middle' x='336' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
+&lt;text text-anchor='middle' x='344' y='4' fill='currentColor' style='font-size:1em'>ₙ&lt;/text>
+&lt;text text-anchor='middle' x='360' y='4' fill='currentColor' style='font-size:1em'>+&lt;/text>
+&lt;text text-anchor='middle' x='376' y='4' fill='currentColor' style='font-size:1em'>b&lt;/text>
+&lt;text text-anchor='middle' x='384' y='4' fill='currentColor' style='font-size:1em'>)&lt;/text>
+&lt;/g>
+
+ &lt;/svg>
+ 
+&lt;/div>
+&lt;p>Organizing multiple neurons into layers forms a neural network. The &amp;ldquo;deep&amp;rdquo; in deep learning refers to having many layers (typically more than 3).&lt;/p></description></item><item><title>Large Language Models</title><link>https://martinsky999.github.io/en/ai-foundations/llm/</link><pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/llm/</guid><description>&lt;h2 id="what-llms-really-are">What LLMs Really Are&lt;/h2>
+&lt;p>A Large Language Model (LLM) is fundamentally a &lt;strong>next-token predictor&lt;/strong>: given a sequence of preceding tokens, predict the most likely next token.&lt;/p>
+&lt;p>But when models become large enough (billions to trillions of parameters) and training data becomes vast enough (trillions of tokens), this simple objective produces emergent capabilities — reasoning, coding, translation, creative writing&amp;hellip;&lt;/p>
+&lt;h2 id="transformer-the-foundation">Transformer: The Foundation&lt;/h2>
+&lt;p>All major LLMs (GPT series, LLaMA, Claude, Gemini) are based on the Transformer architecture. Its core is &lt;strong>self-attention&lt;/strong>:&lt;/p></description></item><item><title>Announcements</title><link>https://martinsky999.github.io/en/about/announcements/</link><pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/about/announcements/</guid><description>&lt;h2 id="announcements">Announcements&lt;/h2>
 &lt;p>This page tracks major updates to the website and content system.&lt;/p>
 &lt;ul>
 &lt;li>2026-04-01: Navigation upgraded to multi-column mega menu.&lt;/li>
@@ -76,26 +143,4 @@
 &lt;/ul>
 &lt;p>The result was a fragmented ecosystem where every AI application had to reimplement the same integrations.&lt;/p>
 &lt;h2 id="mcp-as-a-universal-protocol">MCP as a Universal Protocol&lt;/h2>
-&lt;p>Anthropic&amp;rsquo;s Model Context Protocol defines a standard client-server architecture for context exchange:&lt;/p></description></item><item><title>AI Native Infrastructure</title><link>https://martinsky999.github.io/en/ai-foundations/machinelearning/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/machinelearning/</guid><description>&lt;h2 id="about-this-book">About This Book&lt;/h2>
-&lt;p>This handbook provides a comprehensive guide to building and operating AI-native infrastructure. It covers the full stack from hardware scheduling to application runtime design, with a focus on production-ready implementations.&lt;/p>
-&lt;h3 id="who-this-book-is-for">Who This Book Is For&lt;/h3>
-&lt;ul>
-&lt;li>Platform engineers building internal ML platforms&lt;/li>
-&lt;li>Infrastructure architects designing AI systems at scale&lt;/li>
-&lt;li>Technical leaders evaluating AI infrastructure investments&lt;/li>
-&lt;li>DevOps engineers extending cloud-native skills to AI workloads&lt;/li>
-&lt;/ul>
-&lt;h3 id="what-youll-learn">What You&amp;rsquo;ll Learn&lt;/h3>
-&lt;p>&lt;strong>Part 1: Foundations&lt;/strong>&lt;/p></description></item><item><title>AI Foundations</title><link>https://martinsky999.github.io/en/ai-foundations/guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/guide/</guid><description>&lt;p>This section gathers the handbook and related material. Start with the &lt;strong>AI Native Infrastructure&lt;/strong> handbook.&lt;/p>
-&lt;p>Quick entry:&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/ai-foundations/MachineLearning/">AI Native Infrastructure (MachineLearning)&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/ai-foundations/DeepLearning/">Content Analysis (DeepLearning)&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/ai-foundations/LLM/">LLM&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>Content Analysis</title><link>https://martinsky999.github.io/en/ai-foundations/deeplearning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/deeplearning/</guid><description/></item><item><title>Large Model Fundamentals</title><link>https://martinsky999.github.io/en/ai-foundations/llm/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/llm/</guid><description>&lt;h2 id="recommended-reading-tech-essays">Recommended reading (Tech Essays)&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/vllm-production-deployment/">Deploying vLLM in Production: Lessons Learned&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/mcp-protocol-explained/">MCP: The USB Standard for AI Context&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/ai-native-infra-principles/">Six Core Principles of AI-Native Infrastructure&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/gpu-virtualization-hami/">GPU Virtualization (HAMi)&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>Progress Tracker</title><link>https://martinsky999.github.io/en/ai_discovery/tracker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai_discovery/tracker/</guid><description/></item><item><title>归档</title><link>https://martinsky999.github.io/en/archives/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/archives/</guid><description>文章归档</description></item><item><title>搜索</title><link>https://martinsky999.github.io/en/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/search/</guid><description/></item></channel></rss>
+&lt;p>Anthropic&amp;rsquo;s Model Context Protocol defines a standard client-server architecture for context exchange:&lt;/p></description></item><item><title>Progress Tracker</title><link>https://martinsky999.github.io/en/ai_discovery/tracker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai_discovery/tracker/</guid><description/></item><item><title>归档</title><link>https://martinsky999.github.io/en/archives/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/archives/</guid><description>文章归档</description></item><item><title>搜索</title><link>https://martinsky999.github.io/en/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/search/</guid><description/></item></channel></rss>

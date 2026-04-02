@@ -1,54 +1,237 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI 基础 on 元知 AI</title><link>https://martinsky999.github.io/ai-foundations/</link><description>Recent content in AI 基础 on 元知 AI</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 15 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/ai-foundations/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 原生基础设施</title><link>https://martinsky999.github.io/ai-foundations/machinelearning/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/machinelearning/</guid><description>&lt;h2 id="关于本书">关于本书&lt;/h2>
-&lt;p>本手册系统介绍如何构建与运维 AI 原生基础设施，从硬件调度到应用运行时设计覆盖全栈，并强调可落地的生产实践。&lt;/p>
-&lt;h3 id="适合读者">适合读者&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI 基础 on 元知 AI</title><link>https://martinsky999.github.io/ai-foundations/</link><description>Recent content in AI 基础 on 元知 AI</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 25 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/ai-foundations/index.xml" rel="self" type="application/rss+xml"/><item><title>学习指引</title><link>https://martinsky999.github.io/ai-foundations/guide/</link><pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/</guid><description>&lt;p>本栏目面向有工程背景的开发者，目标是系统地梳理 AI 时代必须掌握的核心知识。内容围绕两条主线展开：&lt;strong>理论基础&lt;/strong>（机器学习 → 深度学习 → 大模型原理）与&lt;strong>工程实践&lt;/strong>（AI 原生基础设施）。&lt;/p>
+&lt;h2 id="为什么需要这份指引">为什么需要这份指引&lt;/h2>
+&lt;p>AI 领域知识爆炸式增长，但大多数入门资料存在两个极端：要么过于学术，充斥数学公式；要么过于浅显，停留在调用 API 层面。本栏目尝试站在&lt;strong>工程师视角&lt;/strong>，用&amp;quot;能落地、可复现&amp;quot;为标准来选取和组织内容。&lt;/p>
+&lt;h2 id="推荐学习路径">推荐学习路径&lt;/h2>
+&lt;h3 id="第一步机器学习基础">第一步：机器学习基础&lt;/h3>
+&lt;p>从监督学习、无监督学习到强化学习，理解 AI 的底层逻辑。重点不是推导算法，而是&lt;strong>建立直觉&lt;/strong>——知道什么场景用什么工具，以及为什么。&lt;/p>
+&lt;p>→ &lt;a href="https://martinsky999.github.io/zh/ai-foundations/MachineLearning/">前往机器学习章节&lt;/a>&lt;/p>
+&lt;h3 id="第二步深度学习核心">第二步：深度学习核心&lt;/h3>
+&lt;p>神经网络、反向传播、卷积网络……这些是理解现代 AI 系统的基石。本章会用工程师习惯的类比方式来拆解这些概念。&lt;/p>
+&lt;p>→ &lt;a href="https://martinsky999.github.io/zh/ai-foundations/DeepLearning/">前往深度学习章节&lt;/a>&lt;/p>
+&lt;h3 id="第三步大模型原理">第三步：大模型原理&lt;/h3>
+&lt;p>Transformer、注意力机制、预训练与微调、RLHF……掌握大模型从训练到推理的全流程，才能真正用好它。&lt;/p>
+&lt;p>→ &lt;a href="https://martinsky999.github.io/zh/ai-foundations/LLM/">前往大模型章节&lt;/a>&lt;/p>
+&lt;h2 id="阅读建议">阅读建议&lt;/h2>
 &lt;ul>
-&lt;li>建设内部机器学习平台的平台工程师&lt;/li>
-&lt;li>设计大规模 AI 系统的基础设施架构师&lt;/li>
-&lt;li>评估 AI 基础设施投入的技术负责人&lt;/li>
-&lt;li>将云原生能力扩展到 AI 工作负载的运维与工程人员&lt;/li>
+&lt;li>&lt;strong>按顺序阅读&lt;/strong>：三个主题存在递进关系，建议从机器学习开始&lt;/li>
+&lt;li>&lt;strong>边读边实践&lt;/strong>：每章都附有推荐阅读和动手链接&lt;/li>
+&lt;li>&lt;strong>不必面面俱到&lt;/strong>：有工程背景的读者可以快速扫过数学推导部分，聚焦架构与工程实现&lt;/li>
 &lt;/ul>
-&lt;h3 id="你将学到什么">你将学到什么&lt;/h3>
-&lt;p>&lt;strong>第一部分：基础&lt;/strong>&lt;/p>
+&lt;h2 id="参考资源">参考资源&lt;/h2>
+&lt;p>本栏目内容参考并整合了以下优质资源：&lt;/p>
 &lt;ul>
-&lt;li>AI 原生基础设施的六项原则&lt;/li>
-&lt;li>AI 工作负载与传统云原生服务的差异&lt;/li>
-&lt;li>面向软件工程师的 GPU 硬件基础&lt;/li>
+&lt;li>&lt;a href="https://jimmysong.io/zh/book/ai-handbook/">Jimmy Song 的 AI 手册&lt;/a> — 云原生工程师视角的 AI 实践指南&lt;/li>
+&lt;li>&lt;a href="https://karpathy.ai/zero-to-hero.html">Andrej Karpathy 的 Neural Networks: Zero to Hero&lt;/a> — 从零构建神经网络&lt;/li>
+&lt;li>&lt;a href="https://www.fast.ai/">Fast.ai 实战深度学习&lt;/a> — 自顶向下的实践路径&lt;/li>
+&lt;/ul></description></item><item><title>机器学习基础</title><link>https://martinsky999.github.io/ai-foundations/machinelearning/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/machinelearning/</guid><description>&lt;h2 id="什么是机器学习">什么是机器学习&lt;/h2>
+&lt;p>机器学习（Machine Learning, ML）是 AI 的核心子领域，其核心思想是：&lt;strong>让计算机从数据中自动学习规律，而不需要人工显式编程每一条规则&lt;/strong>。&lt;/p>
+&lt;p>与传统编程不同，传统方法是&amp;quot;规则 + 数据 → 答案&amp;quot;，而机器学习是&amp;quot;数据 + 答案 → 规则&amp;quot;。&lt;/p>
+&lt;h2 id="三大学习范式">三大学习范式&lt;/h2>
+&lt;h3 id="监督学习supervised-learning">监督学习（Supervised Learning）&lt;/h3>
+&lt;p>训练数据带有标签（label），模型学习输入到输出的映射关系。&lt;/p>
+&lt;p>&lt;strong>典型任务：&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>分类（Classification）：判断邮件是否为垃圾邮件&lt;/li>
+&lt;li>回归（Regression）：预测房价&lt;/li>
 &lt;/ul>
-&lt;p>&lt;strong>第二部分：计算层&lt;/strong>&lt;/p>
+&lt;p>**常用算法：**线性回归、决策树、随机森林、SVM、神经网络&lt;/p>
+&lt;h3 id="无监督学习unsupervised-learning">无监督学习（Unsupervised Learning）&lt;/h3>
+&lt;p>训练数据没有标签，模型自己发现数据中的结构和模式。&lt;/p>
+&lt;p>&lt;strong>典型任务：&lt;/strong>&lt;/p>
 &lt;ul>
-&lt;li>基于设备插件的 Kubernetes GPU 调度&lt;/li>
-&lt;li>HAMi 与 GPU 虚拟化&lt;/li>
-&lt;li>多租户 GPU 集群&lt;/li>
+&lt;li>聚类（Clustering）：将用户分群&lt;/li>
+&lt;li>降维（Dimensionality Reduction）：PCA、t-SNE&lt;/li>
 &lt;/ul>
-&lt;p>&lt;strong>第三部分：推理与服务&lt;/strong>&lt;/p>
+&lt;h3 id="强化学习reinforcement-learning">强化学习（Reinforcement Learning）&lt;/h3>
+&lt;p>智能体通过与环境交互，以试错方式学习最优策略，最大化累积奖励。&lt;/p>
+&lt;p>&lt;strong>典型应用：&lt;/strong> 游戏 AI（AlphaGo）、机器人控制、大模型对齐（RLHF）&lt;/p>
+&lt;h2 id="模型训练的本质">模型训练的本质&lt;/h2>
+&lt;p>所有机器学习的核心都是一个优化问题：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>定义损失函数&lt;/strong>：衡量模型预测与真实值的差距&lt;/li>
+&lt;li>&lt;strong>梯度下降&lt;/strong>：沿损失函数下降方向更新参数&lt;/li>
+&lt;li>&lt;strong>迭代收敛&lt;/strong>：重复直到损失足够小&lt;/li>
+&lt;/ol>
+
+
+
+&lt;div class="goat svg-container ">
+ 
+ &lt;svg
+ xmlns="http://www.w3.org/2000/svg"
+ font-family="Menlo,Lucida Console,monospace"
+ 
+ viewBox="0 0 184 25"
+ >
+ &lt;g transform='translate(8,16)'>
+&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>参&lt;/text>
+&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>数&lt;/text>
+&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>更&lt;/text>
+&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>新&lt;/text>
+&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>：&lt;/text>
+&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>θ&lt;/text>
+&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>=&lt;/text>
+&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>θ&lt;/text>
+&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>-&lt;/text>
+&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>α&lt;/text>
+&lt;text text-anchor='middle' x='120' y='4' fill='currentColor' style='font-size:1em'>·&lt;/text>
+&lt;text text-anchor='middle' x='136' y='4' fill='currentColor' style='font-size:1em'>∇&lt;/text>
+&lt;text text-anchor='middle' x='144' y='4' fill='currentColor' style='font-size:1em'>L&lt;/text>
+&lt;text text-anchor='middle' x='152' y='4' fill='currentColor' style='font-size:1em'>(&lt;/text>
+&lt;text text-anchor='middle' x='160' y='4' fill='currentColor' style='font-size:1em'>θ&lt;/text>
+&lt;text text-anchor='middle' x='168' y='4' fill='currentColor' style='font-size:1em'>)&lt;/text>
+&lt;/g>
+
+ &lt;/svg>
+ 
+&lt;/div>
+&lt;p>其中 &lt;code>α&lt;/code> 是学习率，&lt;code>∇L(θ)&lt;/code> 是损失函数对参数的梯度。&lt;/p>
+&lt;h2 id="工程实践要点">工程实践要点&lt;/h2>
+&lt;h3 id="数据是关键">数据是关键&lt;/h3>
+&lt;blockquote>
+&lt;p>&amp;ldquo;数据和特征决定了机器学习的上限，模型和算法只是逼近这个上限。&amp;rdquo;&lt;/p></description></item><item><title>深度学习核心</title><link>https://martinsky999.github.io/ai-foundations/deeplearning/</link><pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/deeplearning/</guid><description>&lt;h2 id="从神经元到神经网络">从神经元到神经网络&lt;/h2>
+&lt;p>深度学习的基本单元是&lt;strong>人工神经元&lt;/strong>，它模拟生物神经元的工作方式：接收多个输入，加权求和后经过激活函数，产生一个输出。&lt;/p>
+
+
+
+&lt;div class="goat svg-container ">
+ 
+ &lt;svg
+ xmlns="http://www.w3.org/2000/svg"
+ font-family="Menlo,Lucida Console,monospace"
+ 
+ viewBox="0 0 400 25"
+ >
+ &lt;g transform='translate(8,16)'>
+&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
+&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>u&lt;/text>
+&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>p&lt;/text>
+&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>u&lt;/text>
+&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>=&lt;/text>
+&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
+&lt;text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>c&lt;/text>
+&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='96' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
+&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>v&lt;/text>
+&lt;text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
+&lt;text text-anchor='middle' x='120' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='128' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
+&lt;text text-anchor='middle' x='136' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
+&lt;text text-anchor='middle' x='144' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
+&lt;text text-anchor='middle' x='152' y='4' fill='currentColor' style='font-size:1em'>(&lt;/text>
+&lt;text text-anchor='middle' x='160' y='4' fill='currentColor' style='font-size:1em'>w&lt;/text>
+&lt;text text-anchor='middle' x='168' y='4' fill='currentColor' style='font-size:1em'>₁&lt;/text>
+&lt;text text-anchor='middle' x='176' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
+&lt;text text-anchor='middle' x='184' y='4' fill='currentColor' style='font-size:1em'>₁&lt;/text>
+&lt;text text-anchor='middle' x='200' y='4' fill='currentColor' style='font-size:1em'>+&lt;/text>
+&lt;text text-anchor='middle' x='216' y='4' fill='currentColor' style='font-size:1em'>w&lt;/text>
+&lt;text text-anchor='middle' x='224' y='4' fill='currentColor' style='font-size:1em'>₂&lt;/text>
+&lt;text text-anchor='middle' x='232' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
+&lt;text text-anchor='middle' x='240' y='4' fill='currentColor' style='font-size:1em'>₂&lt;/text>
+&lt;text text-anchor='middle' x='256' y='4' fill='currentColor' style='font-size:1em'>+&lt;/text>
+&lt;text text-anchor='middle' x='304' y='4' fill='currentColor' style='font-size:1em'>+&lt;/text>
+&lt;text text-anchor='middle' x='320' y='4' fill='currentColor' style='font-size:1em'>w&lt;/text>
+&lt;text text-anchor='middle' x='328' y='4' fill='currentColor' style='font-size:1em'>ₙ&lt;/text>
+&lt;text text-anchor='middle' x='336' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
+&lt;text text-anchor='middle' x='344' y='4' fill='currentColor' style='font-size:1em'>ₙ&lt;/text>
+&lt;text text-anchor='middle' x='360' y='4' fill='currentColor' style='font-size:1em'>+&lt;/text>
+&lt;text text-anchor='middle' x='376' y='4' fill='currentColor' style='font-size:1em'>b&lt;/text>
+&lt;text text-anchor='middle' x='384' y='4' fill='currentColor' style='font-size:1em'>)&lt;/text>
+&lt;/g>
+
+ &lt;/svg>
+ 
+&lt;/div>
+&lt;p>将多个神经元按层组织，就构成了神经网络。&amp;ldquo;深度&amp;quot;学习中的&amp;quot;深&amp;quot;指的是网络的层数较多（通常超过 3 层）。&lt;/p>
+&lt;h2 id="关键机制反向传播">关键机制：反向传播&lt;/h2>
+&lt;p>训练神经网络的核心算法。思路很直接：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>前向传播&lt;/strong>：数据流过网络，得到预测值&lt;/li>
+&lt;li>&lt;strong>计算损失&lt;/strong>：将预测值与真实值比较&lt;/li>
+&lt;li>&lt;strong>反向传播&lt;/strong>：利用链式法则，从输出层向输入层逐层计算梯度&lt;/li>
+&lt;li>&lt;strong>参数更新&lt;/strong>：用梯度下降更新权重&lt;/li>
+&lt;/ol>
+&lt;p>反向传播本质上是&lt;strong>微积分链式法则的自动化应用&lt;/strong>，现代深度学习框架（PyTorch、TensorFlow）都内置了自动微分（Autograd）机制。&lt;/p>
+&lt;h2 id="主要架构演进">主要架构演进&lt;/h2>
+&lt;h3 id="卷积神经网络cnn">卷积神经网络（CNN）&lt;/h3>
+&lt;p>专为图像设计：通过卷积层自动提取局部特征，参数共享使模型高效。&lt;/p>
 &lt;ul>
-&lt;li>vLLM 与 PagedAttention&lt;/li>
-&lt;li>在 Kubernetes 上扩展推理&lt;/li>
-&lt;li>模型服务最佳实践&lt;/li>
+&lt;li>&lt;strong>代表性模型&lt;/strong>：LeNet、ResNet、EfficientNet&lt;/li>
+&lt;li>&lt;strong>主要应用&lt;/strong>：图像分类、目标检测、语义分割&lt;/li>
 &lt;/ul>
-&lt;p>&lt;strong>第四部分：Agent 运行时&lt;/strong>&lt;/p>
+&lt;h3 id="循环神经网络rnnlstm">循环神经网络（RNN/LSTM）&lt;/h3>
+&lt;p>处理序列数据（文本、时间序列）：通过隐藏状态传递历史信息。&lt;/p>
 &lt;ul>
-&lt;li>Agent 架构模式&lt;/li>
-&lt;li>记忆与状态管理&lt;/li>
-&lt;li>MCP 与上下文协议&lt;/li>
+&lt;li>&lt;strong>问题&lt;/strong>：长距离依赖时梯度消失/爆炸&lt;/li>
+&lt;li>&lt;strong>改进&lt;/strong>：LSTM、GRU 通过门控机制缓解此问题&lt;/li>
 &lt;/ul>
-&lt;p>&lt;strong>第五部分：可观测性&lt;/strong>&lt;/p>
+&lt;h3 id="transformer划时代">Transformer（划时代）&lt;/h3>
+&lt;p>2017 年 &amp;ldquo;Attention Is All You Need&amp;rdquo; 论文提出，彻底改变了 NLP 乃至整个 AI 领域。&lt;/p></description></item><item><title>大模型原理</title><link>https://martinsky999.github.io/ai-foundations/llm/</link><pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/llm/</guid><description>&lt;h2 id="大模型的本质">大模型的本质&lt;/h2>
+&lt;p>大语言模型（Large Language Model, LLM）从根本上说是一个&lt;strong>下一词预测器&lt;/strong>：给定前面的 token 序列，预测下一个最可能的 token。&lt;/p>
+&lt;p>但当模型规模足够大（数十亿到数万亿参数）、训练数据足够多（数万亿 token）时，这个简单目标产生了涌现能力——推理、编程、翻译、创作……&lt;/p>
+&lt;h2 id="transformer大模型的基础架构">Transformer：大模型的基础架构&lt;/h2>
+&lt;p>所有主流大模型（GPT 系列、LLaMA、Claude、Gemini）都基于 Transformer 架构。其核心是&lt;strong>自注意力机制&lt;/strong>：&lt;/p>
+
+
+
+&lt;div class="goat svg-container ">
+ 
+ &lt;svg
+ xmlns="http://www.w3.org/2000/svg"
+ font-family="Menlo,Lucida Console,monospace"
+ 
+ viewBox="0 0 352 25"
+ >
+ &lt;g transform='translate(8,16)'>
+&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>A&lt;/text>
+&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>e&lt;/text>
+&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
+&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='48' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
+&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
+&lt;text text-anchor='middle' x='64' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
+&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>(&lt;/text>
+&lt;text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>Q&lt;/text>
+&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>,&lt;/text>
+&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>K&lt;/text>
+&lt;text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>,&lt;/text>
+&lt;text text-anchor='middle' x='128' y='4' fill='currentColor' style='font-size:1em'>V&lt;/text>
+&lt;text text-anchor='middle' x='136' y='4' fill='currentColor' style='font-size:1em'>)&lt;/text>
+&lt;text text-anchor='middle' x='152' y='4' fill='currentColor' style='font-size:1em'>=&lt;/text>
+&lt;text text-anchor='middle' x='168' y='4' fill='currentColor' style='font-size:1em'>s&lt;/text>
+&lt;text text-anchor='middle' x='176' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
+&lt;text text-anchor='middle' x='184' y='4' fill='currentColor' style='font-size:1em'>f&lt;/text>
+&lt;text text-anchor='middle' x='192' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
+&lt;text text-anchor='middle' x='200' y='4' fill='currentColor' style='font-size:1em'>m&lt;/text>
+&lt;text text-anchor='middle' x='208' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
+&lt;text text-anchor='middle' x='216' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
+&lt;text text-anchor='middle' x='224' y='4' fill='currentColor' style='font-size:1em'>(&lt;/text>
+&lt;text text-anchor='middle' x='232' y='4' fill='currentColor' style='font-size:1em'>Q&lt;/text>
+&lt;text text-anchor='middle' x='240' y='4' fill='currentColor' style='font-size:1em'>K&lt;/text>
+&lt;text text-anchor='middle' x='248' y='4' fill='currentColor' style='font-size:1em'>ᵀ&lt;/text>
+&lt;text text-anchor='middle' x='264' y='4' fill='currentColor' style='font-size:1em'>/&lt;/text>
+&lt;text text-anchor='middle' x='280' y='4' fill='currentColor' style='font-size:1em'>√&lt;/text>
+&lt;text text-anchor='middle' x='288' y='4' fill='currentColor' style='font-size:1em'>d&lt;/text>
+&lt;text text-anchor='middle' x='296' y='4' fill='currentColor' style='font-size:1em'>ₖ&lt;/text>
+&lt;text text-anchor='middle' x='304' y='4' fill='currentColor' style='font-size:1em'>)&lt;/text>
+&lt;text text-anchor='middle' x='320' y='4' fill='currentColor' style='font-size:1em'>·&lt;/text>
+&lt;text text-anchor='middle' x='336' y='4' fill='currentColor' style='font-size:1em'>V&lt;/text>
+&lt;/g>
+
+ &lt;/svg>
+ 
+&lt;/div>
+&lt;p>每个 token 通过&amp;quot;查询（Q）&amp;ldquo;与所有其他 token 的&amp;quot;键（K）&amp;ldquo;计算相关性分数，再用这个分数对&amp;quot;值（V）&amp;ldquo;加权求和。这让模型可以直接捕捉任意距离的依赖关系。&lt;/p>
+&lt;h3 id="解码器架构decoder-only">解码器架构（Decoder-only）&lt;/h3>
+&lt;p>GPT、LLaMA 等生成式模型使用纯解码器架构：&lt;/p>
 &lt;ul>
-&lt;li>AI 系统的指标体系&lt;/li>
-&lt;li>发现模型质量退化&lt;/li>
-&lt;li>GPU 工作负载的成本归因&lt;/li>
+&lt;li>每次只能看到自己左侧的 token（&lt;strong>因果注意力&lt;/strong>）&lt;/li>
+&lt;li>自回归生成：一次生成一个 token，再将其加入上下文&lt;/li>
 &lt;/ul>
-&lt;h2 id="在线阅读">在线阅读&lt;/h2>
-&lt;p>本文为持续更新的活文档，会随领域演进补充章节。&lt;/p></description></item><item><title>AI 基础</title><link>https://martinsky999.github.io/ai-foundations/guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/</guid><description>&lt;p>本站「AI 基础」栏目聚合手册与扩展阅读；主文档为《AI 原生基础设施》在线手册。&lt;/p>
-&lt;p>快捷入口：&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://martinsky999.github.io/ai-foundations/machinelearning/">AI 原生基础设施（MachineLearning）&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/ai-foundations/deeplearning/">内容分析（DeepLearning）&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/ai-foundations/llm/">LLM&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>大模型原理</title><link>https://martinsky999.github.io/ai-foundations/llm/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/llm/</guid><description>&lt;h2 id="推荐阅读技术随笔">推荐阅读（技术随笔）&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/vllm-production-deployment/">在生产环境部署 vLLM：经验总结&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/mcp-protocol-explained/">MCP：AI 上下文的“USB 标准”&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/ai-native-infra-principles/">AI 原生基础设施的六项核心原则&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/gpu-virtualization-hami/">GPU 虚拟化（HAMi）&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>内容分析</title><link>https://martinsky999.github.io/ai-foundations/deeplearning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/deeplearning/</guid><description/></item></channel></rss>
+&lt;h2 id="训练三阶段">训练三阶段&lt;/h2>
+&lt;h3 id="1-预训练pre-training">1. 预训练（Pre-training）&lt;/h3>
+&lt;p>在海量无标注文本上训练，学习语言的统计规律。&lt;/p></description></item></channel></rss>

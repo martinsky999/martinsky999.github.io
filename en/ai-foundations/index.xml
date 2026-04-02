@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI Foundations on Yuanzhi AI</title><link>https://martinsky999.github.io/en/ai-foundations/</link><description>Recent content in AI Foundations on Yuanzhi AI</description><generator>Hugo</generator><language>en-US</language><lastBuildDate>Thu, 15 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/en/ai-foundations/index.xml" rel="self" type="application/rss+xml"/><item><title>AI Native Infrastructure</title><link>https://martinsky999.github.io/en/ai-foundations/ai-native-infrastructure/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/ai-native-infrastructure/</guid><description>&lt;h2 id="about-this-book">About This Book&lt;/h2>
+&lt;p>This handbook provides a comprehensive guide to building and operating AI-native infrastructure. It covers the full stack from hardware scheduling to application runtime design, with a focus on production-ready implementations.&lt;/p>
+&lt;h3 id="who-this-book-is-for">Who This Book Is For&lt;/h3>
+&lt;ul>
+&lt;li>Platform engineers building internal ML platforms&lt;/li>
+&lt;li>Infrastructure architects designing AI systems at scale&lt;/li>
+&lt;li>Technical leaders evaluating AI infrastructure investments&lt;/li>
+&lt;li>DevOps engineers extending cloud-native skills to AI workloads&lt;/li>
+&lt;/ul>
+&lt;h3 id="what-youll-learn">What You&amp;rsquo;ll Learn&lt;/h3>
+&lt;p>&lt;strong>Part 1: Foundations&lt;/strong>&lt;/p></description></item><item><title>Content Analysis</title><link>https://martinsky999.github.io/en/ai-foundations/analysis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/analysis/</guid><description/></item><item><title>Large Model Fundamentals</title><link>https://martinsky999.github.io/en/ai-foundations/ai-infra-brief/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/en/ai-foundations/ai-infra-brief/</guid><description>&lt;h2 id="recommended-reading-tech-essays">Recommended reading (Tech Essays)&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/vllm-production-deployment/">Deploying vLLM in Production: Lessons Learned&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/mcp-protocol-explained/">MCP: The USB Standard for AI Context&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/ai-native-infra-principles/">Six Core Principles of AI-Native Infrastructure&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://martinsky999.github.io/en/blog/tech-essay/gpu-virtualization-hami/">GPU Virtualization (HAMi)&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

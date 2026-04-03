@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>基础知识 on 元知 AI</title><link>https://martinsky999.github.io/ai-foundations/guide/fundamentals/</link><description>Recent content in 基础知识 on 元知 AI</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 02 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/ai-foundations/guide/fundamentals/index.xml" rel="self" type="application/rss+xml"/><item><title>核心概念速览</title><link>https://martinsky999.github.io/ai-foundations/guide/fundamentals/core-concepts/</link><pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/fundamentals/core-concepts/</guid><description>&lt;p>本页用于快速建立 AI 基础概念地图，帮助你在阅读后续章节时形成统一术语与结构化理解。&lt;/p>
+&lt;h2 id="一张图看基础链路">一张图看基础链路&lt;/h2>
+&lt;p>数据 -&amp;gt; 训练 -&amp;gt; 模型 -&amp;gt; 推理 -&amp;gt; 应用 -&amp;gt; 评估与反馈 -&amp;gt; 再训练&lt;/p>
+&lt;h2 id="关键概念">关键概念&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>模型（Model）&lt;/strong>：把输入映射到输出的函数系统&lt;/li>
+&lt;li>&lt;strong>参数（Parameters）&lt;/strong>：模型通过训练得到的内部权重&lt;/li>
+&lt;li>&lt;strong>训练（Training）&lt;/strong>：通过优化算法让模型在数据上学习规律&lt;/li>
+&lt;li>&lt;strong>推理（Inference）&lt;/strong>：使用已训练模型处理新输入并生成输出&lt;/li>
+&lt;li>&lt;strong>对齐（Alignment）&lt;/strong>：让模型行为更符合人类目标与安全约束&lt;/li>
+&lt;li>&lt;strong>评估（Evaluation）&lt;/strong>：通过基准与真实任务验证模型质量&lt;/li>
+&lt;/ul>
+&lt;h2 id="工程视角关注点">工程视角关注点&lt;/h2>
+&lt;ul>
+&lt;li>准确性与稳定性是否满足业务要求&lt;/li>
+&lt;li>时延、吞吐、成本是否可控&lt;/li>
+&lt;li>数据与提示词是否可持续迭代&lt;/li>
+&lt;li>是否具备可观测性与回归评估机制&lt;/li>
+&lt;/ul></description></item><item><title>学习路径建议</title><link>https://martinsky999.github.io/ai-foundations/guide/fundamentals/learning-path/</link><pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/fundamentals/learning-path/</guid><description>&lt;p>本页给出一条可执行的基础学习路径，默认读者具备软件工程背景。&lt;/p>
+&lt;h2 id="阶段一建立全景认知1-2-周">阶段一：建立全景认知（1-2 周）&lt;/h2>
+&lt;ul>
+&lt;li>理解机器学习、深度学习、大模型三者关系&lt;/li>
+&lt;li>区分训练、微调、推理、部署的职责边界&lt;/li>
+&lt;li>输出：一份你自己的 AI 概念地图&lt;/li>
+&lt;/ul>
+&lt;h2 id="阶段二打牢模型基础2-4-周">阶段二：打牢模型基础（2-4 周）&lt;/h2>
+&lt;ul>
+&lt;li>学习 Transformer、注意力机制、上下文窗口、KV Cache&lt;/li>
+&lt;li>理解预训练、指令微调、RLHF 的目标与差异&lt;/li>
+&lt;li>输出：能解释大模型一次响应是如何生成的&lt;/li>
+&lt;/ul>
+&lt;h2 id="阶段三进入工程实践2-4-周">阶段三：进入工程实践（2-4 周）&lt;/h2>
+&lt;ul>
+&lt;li>上手提示词工程、RAG、工具调用、评估指标&lt;/li>
+&lt;li>学会构建最小可用 AI 应用（MVP）&lt;/li>
+&lt;li>输出：一个可演示的端到端 Demo&lt;/li>
+&lt;/ul>
+&lt;h2 id="阶段四形成迭代闭环持续">阶段四：形成迭代闭环（持续）&lt;/h2>
+&lt;ul>
+&lt;li>建立线上观测、离线评估、A/B 验证机制&lt;/li>
+&lt;li>把“经验调参”沉淀为“可复用方法”&lt;/li>
+&lt;li>输出：稳定迭代的 AI 项目工作流&lt;/li>
+&lt;/ul></description></item></channel></rss>

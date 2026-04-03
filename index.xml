@@ -1,62 +1,46 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>元知 AI</title><link>https://martinsky999.github.io/</link><description>Recent content on 元知 AI</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 02 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>前言</title><link>https://martinsky999.github.io/ai-foundations/guide/preface/</link><pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/preface/</guid><description>&lt;p>本栏目面向有工程背景的开发者，目标是系统地梳理 AI 时代必须掌握的核心知识。内容围绕两条主线展开：&lt;strong>理论基础&lt;/strong>（机器学习 -&amp;gt; 深度学习 -&amp;gt; 大模型原理）与&lt;strong>工程实践&lt;/strong>（AI 原生基础设施）。&lt;/p>
-&lt;h2 id="为什么需要这份指引">为什么需要这份指引&lt;/h2>
-&lt;p>AI 领域知识爆炸式增长，但大多数入门资料存在两个极端：要么过于学术，充斥数学公式；要么过于浅显，停留在调用 API 层面。本栏目尝试站在&lt;strong>工程师视角&lt;/strong>，用&amp;quot;能落地、可复现&amp;quot;为标准来选取和组织内容。&lt;/p>
-&lt;h2 id="推荐学习路径">推荐学习路径&lt;/h2>
-&lt;h3 id="第一步机器学习基础">第一步：机器学习基础&lt;/h3>
-&lt;p>从监督学习、无监督学习到强化学习，理解 AI 的底层逻辑。重点不是推导算法，而是&lt;strong>建立直觉&lt;/strong>——知道什么场景用什么工具，以及为什么。&lt;/p>
-&lt;p>-&amp;gt; &lt;a href="https://martinsky999.github.io/zh/ai-foundations/MachineLearning/">前往机器学习章节&lt;/a>&lt;/p>
-&lt;h3 id="第二步深度学习核心">第二步：深度学习核心&lt;/h3>
-&lt;p>神经网络、反向传播、卷积网络……这些是理解现代 AI 系统的基石。本章会用工程师习惯的类比方式来拆解这些概念。&lt;/p>
-&lt;p>-&amp;gt; &lt;a href="https://martinsky999.github.io/zh/ai-foundations/DeepLearning/">前往深度学习章节&lt;/a>&lt;/p>
-&lt;h3 id="第三步大模型原理">第三步：大模型原理&lt;/h3>
-&lt;p>Transformer、注意力机制、预训练与微调、RLHF……掌握大模型从训练到推理的全流程，才能真正用好它。&lt;/p>
-&lt;p>-&amp;gt; &lt;a href="https://martinsky999.github.io/zh/ai-foundations/LLM/">前往大模型章节&lt;/a>&lt;/p>
-&lt;h2 id="阅读建议">阅读建议&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>元知 AI</title><link>https://martinsky999.github.io/</link><description>Recent content on 元知 AI</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://martinsky999.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>单智能体工作流</title><link>https://martinsky999.github.io/ai-foundations/guide/agents/single-agent/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/agents/single-agent/</guid><description>&lt;p>本页为 Part III 子主题占位，内容与导航结构将随手册完善而更新。&lt;/p></description></item><item><title>模型服务与推理层</title><link>https://martinsky999.github.io/ai-foundations/guide/ai-native-infra/inference/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/ai-native-infra/inference/</guid><description>&lt;p>本页为 Part II 子主题占位，内容与导航结构将随手册完善而更新。&lt;/p></description></item><item><title>核心概念速览</title><link>https://martinsky999.github.io/ai-foundations/guide/fundamentals/core-concepts/</link><pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/fundamentals/core-concepts/</guid><description>&lt;p>本页用于快速建立 AI 基础概念地图，帮助你在阅读后续章节时形成统一术语与结构化理解。&lt;/p>
+&lt;h2 id="一张图看基础链路">一张图看基础链路&lt;/h2>
+&lt;p>数据 -&amp;gt; 训练 -&amp;gt; 模型 -&amp;gt; 推理 -&amp;gt; 应用 -&amp;gt; 评估与反馈 -&amp;gt; 再训练&lt;/p>
+&lt;h2 id="关键概念">关键概念&lt;/h2>
 &lt;ul>
-&lt;li>&lt;strong>按顺序阅读&lt;/strong>：三个主题存在递进关系，建议从机器学习开始&lt;/li>
-&lt;li>&lt;strong>边读边实践&lt;/strong>：每章都附有推荐阅读和动手链接&lt;/li>
-&lt;li>&lt;strong>不必面面俱到&lt;/strong>：有工程背景的读者可以快速扫过数学推导部分，聚焦架构与工程实现&lt;/li>
+&lt;li>&lt;strong>模型（Model）&lt;/strong>：把输入映射到输出的函数系统&lt;/li>
+&lt;li>&lt;strong>参数（Parameters）&lt;/strong>：模型通过训练得到的内部权重&lt;/li>
+&lt;li>&lt;strong>训练（Training）&lt;/strong>：通过优化算法让模型在数据上学习规律&lt;/li>
+&lt;li>&lt;strong>推理（Inference）&lt;/strong>：使用已训练模型处理新输入并生成输出&lt;/li>
+&lt;li>&lt;strong>对齐（Alignment）&lt;/strong>：让模型行为更符合人类目标与安全约束&lt;/li>
+&lt;li>&lt;strong>评估（Evaluation）&lt;/strong>：通过基准与真实任务验证模型质量&lt;/li>
 &lt;/ul>
-&lt;h2 id="参考资源">参考资源&lt;/h2>
-&lt;p>本栏目内容参考并整合了以下优质资源：&lt;/p>
+&lt;h2 id="工程视角关注点">工程视角关注点&lt;/h2>
 &lt;ul>
-&lt;li>&lt;a href="https://jimmysong.io/zh/book/ai-handbook/">Jimmy Song 的 AI 手册&lt;/a> — 云原生工程师视角的 AI 实践指南&lt;/li>
-&lt;li>&lt;a href="https://karpathy.ai/zero-to-hero.html">Andrej Karpathy 的 Neural Networks: Zero to Hero&lt;/a> — 从零构建神经网络&lt;/li>
-&lt;li>&lt;a href="https://www.fast.ai/">Fast.ai 实战深度学习&lt;/a> — 自顶向下的实践路径&lt;/li>
-&lt;/ul></description></item><item><title>AI 原生基础设施</title><link>https://martinsky999.github.io/ai-foundations/guide/ai-native-infra/</link><pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/ai-native-infra/</guid><description>&lt;p>这是 Part II 的示例条目。你可以在这里继续拆分：&lt;/p>
+&lt;li>准确性与稳定性是否满足业务要求&lt;/li>
+&lt;li>时延、吞吐、成本是否可控&lt;/li>
+&lt;li>数据与提示词是否可持续迭代&lt;/li>
+&lt;li>是否具备可观测性与回归评估机制&lt;/li>
+&lt;/ul></description></item><item><title>多智能体协同</title><link>https://martinsky999.github.io/ai-foundations/guide/agents/multi-agent/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/agents/multi-agent/</guid><description>&lt;p>本页为 Part III 子主题占位，内容与导航结构将随手册完善而更新。&lt;/p></description></item><item><title>上下文工程与会话层</title><link>https://martinsky999.github.io/ai-foundations/guide/ai-native-infra/context/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/ai-native-infra/context/</guid><description>&lt;p>本页为 Part II 子主题占位，内容与导航结构将随手册完善而更新。&lt;/p></description></item><item><title>学习路径建议</title><link>https://martinsky999.github.io/ai-foundations/guide/fundamentals/learning-path/</link><pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/fundamentals/learning-path/</guid><description>&lt;p>本页给出一条可执行的基础学习路径，默认读者具备软件工程背景。&lt;/p>
+&lt;h2 id="阶段一建立全景认知1-2-周">阶段一：建立全景认知（1-2 周）&lt;/h2>
 &lt;ul>
-&lt;li>模型服务与推理层&lt;/li>
-&lt;li>上下文工程与会话层&lt;/li>
-&lt;li>检索增强（RAG）与知识层&lt;/li>
+&lt;li>理解机器学习、深度学习、大模型三者关系&lt;/li>
+&lt;li>区分训练、微调、推理、部署的职责边界&lt;/li>
+&lt;li>输出：一份你自己的 AI 概念地图&lt;/li>
 &lt;/ul>
-&lt;p>后续只要给该分类下的页面设置 &lt;code>partId: &amp;quot;part2&amp;quot;&lt;/code>，就会自动归到「Part II · AI 原生基础设施」。&lt;/p></description></item><item><title>基础知识</title><link>https://martinsky999.github.io/ai-foundations/guide/fundamentals/</link><pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/fundamentals/</guid><description>&lt;p>本页内容来源于 &lt;code>part-1-cognition-foundation/fundamentals&lt;/code>，用于作为 Part I 的“基础知识”统一入口。&lt;/p>
-&lt;h2 id="学习目标">学习目标&lt;/h2>
+&lt;h2 id="阶段二打牢模型基础2-4-周">阶段二：打牢模型基础（2-4 周）&lt;/h2>
 &lt;ul>
-&lt;li>建立 AI 技术全景认知（模型、训练、推理、工程化）&lt;/li>
-&lt;li>理解大模型从预训练到微调、对齐与部署的关键链路&lt;/li>
-&lt;li>形成可落地的基础学习路径，避免只停留在 API 调用层&lt;/li>
+&lt;li>学习 Transformer、注意力机制、上下文窗口、KV Cache&lt;/li>
+&lt;li>理解预训练、指令微调、RLHF 的目标与差异&lt;/li>
+&lt;li>输出：能解释大模型一次响应是如何生成的&lt;/li>
 &lt;/ul>
-&lt;h2 id="章节目录part-i-fundamentals">章节目录（Part I Fundamentals）&lt;/h2>
+&lt;h2 id="阶段三进入工程实践2-4-周">阶段三：进入工程实践（2-4 周）&lt;/h2>
 &lt;ul>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/ai-landscape/">大模型技术全景&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/machine-learning/">机器学习基础&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/how-ai-model-think/">大模型工作原理&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/transformer/">Transformer&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/attention/">注意力机制&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/kv-cache/">KV 缓存&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/rlhf/">人类反馈强化学习（RLHF）&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/pre-training/">预训练&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/fine-tuning/">微调&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://martinsky999.github.io/zh/ai-foundations/guide/part-1-cognition-foundation/fundamentals/ai-model-training-engineering/">模型训练的工程化路径&lt;/a>&lt;/li>
+&lt;li>上手提示词工程、RAG、工具调用、评估指标&lt;/li>
+&lt;li>学会构建最小可用 AI 应用（MVP）&lt;/li>
+&lt;li>输出：一个可演示的端到端 Demo&lt;/li>
 &lt;/ul>
-&lt;h2 id="阅读建议">阅读建议&lt;/h2>
-&lt;p>建议按上面的顺序阅读：先建立 AI 全景与机器学习直觉，再进入 Transformer 与推理优化，最后补齐训练工程化能力。&lt;/p></description></item><item><title>智能体</title><link>https://martinsky999.github.io/ai-foundations/guide/agents/</link><pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/agents/</guid><description>&lt;p>这是 Part III 的示例条目。建议后续从以下结构逐步补全：&lt;/p>
+&lt;h2 id="阶段四形成迭代闭环持续">阶段四：形成迭代闭环（持续）&lt;/h2>
 &lt;ul>
-&lt;li>单智能体工作流&lt;/li>
-&lt;li>多智能体协同&lt;/li>
-&lt;li>观测、评估与安全治理&lt;/li>
-&lt;/ul>
-&lt;p>只要页面设置 &lt;code>partId: &amp;quot;part3&amp;quot;&lt;/code>，就会归到「Part III · 智能体」。&lt;/p></description></item><item><title>深度学习核心</title><link>https://martinsky999.github.io/ai-foundations/deeplearning/</link><pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/deeplearning/</guid><description>&lt;h2 id="从神经元到神经网络">从神经元到神经网络&lt;/h2>
+&lt;li>建立线上观测、离线评估、A/B 验证机制&lt;/li>
+&lt;li>把“经验调参”沉淀为“可复用方法”&lt;/li>
+&lt;li>输出：稳定迭代的 AI 项目工作流&lt;/li>
+&lt;/ul></description></item><item><title>观测、评估与安全治理</title><link>https://martinsky999.github.io/ai-foundations/guide/agents/governance/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/agents/governance/</guid><description>&lt;p>本页为 Part III 子主题占位，内容与导航结构将随手册完善而更新。&lt;/p></description></item><item><title>检索增强（RAG）与知识层</title><link>https://martinsky999.github.io/ai-foundations/guide/ai-native-infra/rag/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/ai-native-infra/rag/</guid><description>&lt;p>本页为 Part II 子主题占位，内容与导航结构将随手册完善而更新。&lt;/p></description></item><item><title>深度学习核心</title><link>https://martinsky999.github.io/ai-foundations/deeplearning/</link><pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/deeplearning/</guid><description>&lt;h2 id="从神经元到神经网络">从神经元到神经网络&lt;/h2>
 &lt;p>深度学习的基本单元是&lt;strong>人工神经元&lt;/strong>，它模拟生物神经元的工作方式：接收多个输入，加权求和后经过激活函数，产生一个输出。&lt;/p>
 
 
@@ -201,7 +185,32 @@
 &lt;/ul>
 &lt;h2 id="训练三阶段">训练三阶段&lt;/h2>
 &lt;h3 id="1-预训练pre-training">1. 预训练（Pre-training）&lt;/h3>
-&lt;p>在海量无标注文本上训练，学习语言的统计规律。&lt;/p></description></item><item><title>公告</title><link>https://martinsky999.github.io/about/announcements/</link><pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/about/announcements/</guid><description>&lt;ul>
+&lt;p>在海量无标注文本上训练，学习语言的统计规律。&lt;/p></description></item><item><title>前言</title><link>https://martinsky999.github.io/ai-foundations/guide/preface/</link><pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai-foundations/guide/preface/</guid><description>&lt;p>本栏目面向有工程背景的开发者，目标是系统地梳理 AI 时代必须掌握的核心知识。内容围绕两条主线展开：&lt;strong>理论基础&lt;/strong>（机器学习 -&amp;gt; 深度学习 -&amp;gt; 大模型原理）与&lt;strong>工程实践&lt;/strong>（AI 原生基础设施）。&lt;/p>
+&lt;h2 id="为什么需要这份指引">为什么需要这份指引&lt;/h2>
+&lt;p>AI 领域知识爆炸式增长，但大多数入门资料存在两个极端：要么过于学术，充斥数学公式；要么过于浅显，停留在调用 API 层面。本栏目尝试站在&lt;strong>工程师视角&lt;/strong>，用&amp;quot;能落地、可复现&amp;quot;为标准来选取和组织内容。&lt;/p>
+&lt;h2 id="推荐学习路径">推荐学习路径&lt;/h2>
+&lt;h3 id="第一步机器学习基础">第一步：机器学习基础&lt;/h3>
+&lt;p>从监督学习、无监督学习到强化学习，理解 AI 的底层逻辑。重点不是推导算法，而是&lt;strong>建立直觉&lt;/strong>——知道什么场景用什么工具，以及为什么。&lt;/p>
+&lt;p>-&amp;gt; &lt;a href="https://martinsky999.github.io/zh/ai-foundations/MachineLearning/">前往机器学习章节&lt;/a>&lt;/p>
+&lt;h3 id="第二步深度学习核心">第二步：深度学习核心&lt;/h3>
+&lt;p>神经网络、反向传播、卷积网络……这些是理解现代 AI 系统的基石。本章会用工程师习惯的类比方式来拆解这些概念。&lt;/p>
+&lt;p>-&amp;gt; &lt;a href="https://martinsky999.github.io/zh/ai-foundations/DeepLearning/">前往深度学习章节&lt;/a>&lt;/p>
+&lt;h3 id="第三步大模型原理">第三步：大模型原理&lt;/h3>
+&lt;p>Transformer、注意力机制、预训练与微调、RLHF……掌握大模型从训练到推理的全流程，才能真正用好它。&lt;/p>
+&lt;p>-&amp;gt; &lt;a href="https://martinsky999.github.io/zh/ai-foundations/LLM/">前往大模型章节&lt;/a>&lt;/p>
+&lt;h2 id="阅读建议">阅读建议&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>按顺序阅读&lt;/strong>：三个主题存在递进关系，建议从机器学习开始&lt;/li>
+&lt;li>&lt;strong>边读边实践&lt;/strong>：每章都附有推荐阅读和动手链接&lt;/li>
+&lt;li>&lt;strong>不必面面俱到&lt;/strong>：有工程背景的读者可以快速扫过数学推导部分，聚焦架构与工程实现&lt;/li>
+&lt;/ul>
+&lt;h2 id="参考资源">参考资源&lt;/h2>
+&lt;p>本栏目内容参考并整合了以下优质资源：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://jimmysong.io/zh/book/ai-handbook/">Jimmy Song 的 AI 手册&lt;/a> — 云原生工程师视角的 AI 实践指南&lt;/li>
+&lt;li>&lt;a href="https://karpathy.ai/zero-to-hero.html">Andrej Karpathy 的 Neural Networks: Zero to Hero&lt;/a> — 从零构建神经网络&lt;/li>
+&lt;li>&lt;a href="https://www.fast.ai/">Fast.ai 实战深度学习&lt;/a> — 自顶向下的实践路径&lt;/li>
+&lt;/ul></description></item><item><title>公告</title><link>https://martinsky999.github.io/about/announcements/</link><pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/about/announcements/</guid><description>&lt;ul>
 &lt;li>2026-04-01：完成基础中英文切换支持&lt;/li>
 &lt;li>2026-04-01：导航菜单与背景主题优化&lt;/li>
 &lt;/ul></description></item><item><title>联系</title><link>https://martinsky999.github.io/about/contact/</link><pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/about/contact/</guid><description>&lt;p>如需合作或技术交流，请通过 GitHub 联系：&lt;a href="https://github.com/martinsky999">https://github.com/martinsky999&lt;/a>&lt;/p></description></item><item><title>归档</title><link>https://martinsky999.github.io/archives/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/archives/</guid><description>文章归档</description></item><item><title>进展追踪</title><link>https://martinsky999.github.io/ai_discovery/tracker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/ai_discovery/tracker/</guid><description/></item><item><title>搜索</title><link>https://martinsky999.github.io/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://martinsky999.github.io/search/</guid><description/></item></channel></rss>

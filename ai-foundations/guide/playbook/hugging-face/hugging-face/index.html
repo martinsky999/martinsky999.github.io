@@ -1,0 +1,660 @@
+<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="IE=edge"><title>Hugging Face Transformers + PEFT 的 LoRA 微调 | Jimmy Song | 元知 AI</title>
+<meta name=description content="Yuanzhi AI — insight and engineering practice across AI infrastructure, open source, and production systems."><meta name=author content="元知 AI"><meta name=keywords content="AI,Infrastructure,Kubernetes,GPU,LLM,Cloud Native,Open Source,Yuanzhi"><meta property="og:type" content="article"><meta property="og:title" content="Hugging Face Transformers + PEFT 的 LoRA 微调 | Jimmy Song"><meta property="og:description" content="Yuanzhi AI — insight and engineering practice across AI infrastructure, open source, and production systems."><meta property="og:url" content="https://martinsky999.github.io/ai-foundations/guide/playbook/hugging-face/hugging-face/"><meta property="og:site_name" content="元知 AI"><meta property="og:image" content="https://martinsky999.github.io/images/og-image.svg"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Hugging Face Transformers + PEFT 的 LoRA 微调 | Jimmy Song"><meta name=twitter:description content="Yuanzhi AI — insight and engineering practice across AI infrastructure, open source, and production systems."><link rel=canonical href=https://martinsky999.github.io/ai-foundations/guide/playbook/hugging-face/hugging-face/><link rel=icon type=image/svg+xml href=/favicon.svg><link rel=icon type=image/png href=/favicon.png><link rel=apple-touch-icon href=/apple-touch-icon.png><link rel=stylesheet href=/scss/main.min.e494fba3698f0a271cefafb718375ae57bf93952348ecb241b3c81bb06591333.css integrity="sha256-5JT7o2mPCicc76+3GDda5Xv5OVI0jsskGzyBuwZZEzM="><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,900;1,14..32,400&family=JetBrains+Mono:wght@400;500&display=swap" rel=stylesheet><meta name=theme-color content="#0a0f1e"><script type=application/ld+json>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/martinsky999.github.io\/#website","url":"https:\/\/martinsky999.github.io\/","name":"元知 AI","description":"Yuanzhi AI — insight and engineering practice across AI infrastructure, open source, and production systems.","potentialAction":{"@type":"SearchAction","target":"https:\/\/martinsky999.github.io\/search/?q={search_term_string}","query-input":"required name=search_term_string"},"publisher":{"@type":"Person","@id":"https:\/\/martinsky999.github.io\/#person","name":"元知 AI","url":"https:\/\/martinsky999.github.io\/about/"}},{"@type":"Article","@id":"https:\/\/martinsky999.github.io\/ai-foundations\/guide\/playbook\/hugging-face\/hugging-face\/#article","url":"https:\/\/martinsky999.github.io\/ai-foundations\/guide\/playbook\/hugging-face\/hugging-face\/","headline":"Hugging Face Transformers \u002b PEFT 的 LoRA 微调 | Jimmy Song","description":"Yuanzhi AI — insight and engineering practice across AI infrastructure, open source, and production systems.","datePublished":"0001-01-01T00:00:00Z","dateModified":"0001-01-01T00:00:00Z","author":{"@type":"Person","@id":"https:\/\/martinsky999.github.io\/#person","name":"元知 AI"},"isPartOf":{"@id":"https:\/\/martinsky999.github.io\/#website"}}]}</script></head><body><header class=site-header id=site-header><nav class=nav><a href=/ class=nav-logo><div class=logo-icon>元知</div><div class=logo-text>元知 AI
+<span>认知与工程实践</span></div></a><ul class=nav-menu><li class=nav-dropdown><a href=# onclick=return!1>发现<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav-dropdown-menu nav-mega-menu"><div class=nav-mega-col><div class=nav-mega-title>探索</div><a href=/ai_discovery/explore/ class=nav-mega-link><span class=link-name>探索</span><span class=link-desc>持续更新的 AI 开源项目目录。</span>
+</a><a href=/ai_discovery/tracker/ class=nav-mega-link><span class=link-name>进展追踪</span><span class=link-desc>高信号信息源清单，按角色与机构分组，便于持续跟踪。</span></a></div></div></li><li class="nav-dropdown nav-dropdown--mega-ai-infra"><a href=# onclick=return!1 class=active>AI基础<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav-dropdown-menu nav-mega-menu nav-mega-menu--ai-infra"><div class=nav-mega-col><div class=nav-mega-title>AI基础</div><a href=/ai-foundations/guide/ class=nav-mega-link><span class=link-name>入门指南</span><span class=link-desc>从零开始的 AI 学习路径与导读。</span>
+</a><a href=/ai-foundations/machinelearning/ class=nav-mega-link><span class=link-name>机器学习</span><span class=link-desc>机器学习核心概念、算法与工程实践。</span>
+</a><a href=/ai-foundations/deeplearning/ class=nav-mega-link><span class=link-name>深度学习</span><span class=link-desc>神经网络、训练与部署等深度学习主题。</span>
+</a><a href=/ai-foundations/llm/ class=nav-mega-link><span class=link-name>大模型原理</span><span class=link-desc>Transformer、对齐与推理等大模型底层原理。</span></a></div></div></li><li class="nav-dropdown nav-dropdown--mega-blog"><a href=# onclick=return!1>博客<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav-dropdown-menu nav-mega-menu nav-mega-menu--blog"><div class=nav-mega-col><div class=nav-mega-title>博客专栏</div><a href=/blog/tech-essay/ class=nav-mega-link><span class=link-name>技术随笔</span><span class=link-desc>技术随想与工程随笔。</span>
+</a><a href=/blog/study-notes/ class=nav-mega-link><span class=link-name>学习笔记</span><span class=link-desc>课程、论文与专题学习的结构化笔记。</span>
+</a><a href=/blog/project-retro/ class=nav-mega-link><span class=link-name>项目复盘</span><span class=link-desc>交付复盘、踩坑记录与经验沉淀。</span>
+</a><a href=/blog/industry-watch/ class=nav-mega-link><span class=link-name>行业观察</span><span class=link-desc>产业趋势、产品与值得关注的信号。</span>
+</a><a href=/blog/tool-review/ class=nav-mega-link><span class=link-name>工具评测</span><span class=link-desc>开发工具与平台的实测与对比。</span>
+</a><a href=/blog/life-misc/ class=nav-mega-link><span class=link-name>生活杂谈</span><span class=link-desc>与技术主线无关的生活与杂记。</span></a></div></div></li><li class="nav-dropdown nav-dropdown--mega-books"><a href=# onclick=return!1>图书<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav-dropdown-menu nav-mega-menu nav-mega-menu--books"><div class=nav-mega-col><div class=nav-mega-title>图书</div><a href=/book/recommended/ class=nav-mega-link><span class=link-name>推荐书单</span><span class=link-desc>按主题与难度整理的书单与延伸阅读。</span>
+</a><a href=/book/reading-notes/ class=nav-mega-link><span class=link-name>读书笔记</span><span class=link-desc>读书摘要、批注与可复用的要点。</span>
+</a><a href=/book/ebooks/ class=nav-mega-link><span class=link-name>电子书下载</span><span class=link-desc>电子书与可下载资源入口。</span>
+</a><a href=/book/roadmap/ class=nav-mega-link><span class=link-name>学习路线图</span><span class=link-desc>从入门到进阶的结构化学习路径。</span></a></div></div></li><li class="nav-dropdown nav-dropdown--mega-about"><a href=# onclick=return!1>关于<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav-dropdown-menu nav-mega-menu nav-mega-menu--about"><div class=nav-mega-about><div class="nav-mega-about-col nav-mega-about-col--links"><div class=nav-mega-about-heading>快速链接</div><div class=nav-mega-about-cards><a href=/about/ class=nav-mega-about-card><span class=nav-mega-about-card__icon aria-hidden=true><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" width="18" height="18"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+<span class=nav-mega-about-card__body><span class=nav-mega-about-card__title-row><span class=nav-mega-about-card__title>站长简介</span></span><span class=nav-mega-about-card__desc>了解作者背景与主要工作方向。</span></span>
+</a><a href=/about/contact/ class=nav-mega-about-card><span class=nav-mega-about-card__icon aria-hidden=true><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg></span>
+<span class=nav-mega-about-card__body><span class=nav-mega-about-card__title-row><span class=nav-mega-about-card__title>与我联系</span></span><span class=nav-mega-about-card__desc>通过留言或邮件与站长取得联系。</span></span>
+</a><a href=https://github.com/martinsky999 class=nav-mega-about-card target=_blank rel=noopener><span class=nav-mega-about-card__icon aria-hidden=true><svg viewBox="0 0 24 24" fill="currentcolor" width="18" height="18"><path d="M12 0C5.374.0.0 5.373.0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931.0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176.0.0 1.008-.322 3.301 1.23A11.509 11.509.0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221.0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></span>
+<span class=nav-mega-about-card__body><span class=nav-mega-about-card__title-row><span class=nav-mega-about-card__title>GitHub</span><svg class="nav-mega-about-card__ext" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></span><span class=nav-mega-about-card__desc>在 GitHub 关注项目与更新。</span></span>
+</a><a href=/about/announcements/ class=nav-mega-about-card><span class=nav-mega-about-card__icon aria-hidden=true><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" width="18" height="18"><path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 11-5.8-1.6"/></svg></span>
+<span class=nav-mega-about-card__body><span class=nav-mega-about-card__title-row><span class=nav-mega-about-card__title>公告</span></span><span class=nav-mega-about-card__desc>最新更新与公告。</span></span></a></div></div><div class="nav-mega-about-col nav-mega-about-col--wechat-stack"><div class=nav-mega-about-qr-block><div class=nav-mega-about-heading>微信公众号</div><div class=nav-mega-about-qr-frame><div class=nav-mega-about-qr-placeholder>待配置</div></div><p class=nav-mega-about-qr-caption>关注公众号，获取云原生与 AI 相关文章与更新。</p></div><div class=nav-mega-about-qr-block><div class=nav-mega-about-heading>微信联系</div><div class=nav-mega-about-qr-frame><div class=nav-mega-about-qr-placeholder>待配置</div></div><p class=nav-mega-about-qr-caption>扫码添加个人微信，交流云原生与 AI 技术实践。</p></div></div></div></div></li></ul><div class=nav-spacer></div><div class=nav-actions><button class=nav-search-btn id=search-toggle aria-label=Search><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button><div class=nav-lang-switch data-nav-lang-switch><button type=button class=nav-lang-switch__trigger id=nav-lang-trigger aria-expanded=false aria-haspopup=listbox aria-controls=nav-lang-panel>
+<span class=nav-lang-switch__icon aria-hidden=true><span class=nav-lang-switch__icon-box><span class=nav-lang-switch__icon-a>A</span>
+<span class=nav-lang-switch__icon-wen>文</span>
+</span></span><span class=nav-lang-switch__label>中文</span>
+<span class=nav-lang-switch__caret aria-hidden=true><svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentcolor" d="M7 10l5 5 5-5z"/></svg></span></button><div class=nav-lang-switch__panel id=nav-lang-panel role=listbox aria-labelledby=nav-lang-trigger hidden><a href=/en/ class=nav-lang-switch__option role=option>English</a>
+<span class="nav-lang-switch__option nav-lang-switch__option--current" role=option aria-selected=true>中文</span></div></div></div><button class=nav-hamburger id=nav-hamburger aria-label="Toggle menu">
+<span></span>
+<span></span>
+<span></span></button></nav></header><div class=nav-mobile-menu id=nav-mobile-menu><ul><li><a href=# onclick=return!1>发现</a></li><li><a href=# onclick=return!1>AI基础</a></li><li><a href=# onclick=return!1>博客</a></li><li><a href=# onclick=return!1>图书</a></li><li><a href=# onclick=return!1>关于</a></li></ul></div><div class=search-overlay id=search-overlay role=dialog aria-modal=true aria-label=Search><div class=search-backdrop id=search-backdrop></div><div class=search-modal><div class=search-input-wrapper><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+<input type=text id=search-input placeholder=搜索文章、书籍、项目... autocomplete=off autocorrect=off spellcheck=false>
+<kbd>Esc</kbd></div><div class=search-results id=search-results><div class=search-results-empty id=search-empty style=display:none><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><p>未找到相关结果</p></div></div><div class=search-footer><span>由 Fuse.js 提供搜索支持</span><div class=search-shortcuts><span><kbd>↑↓</kbd> navigate</span>
+<span><kbd>↵</kbd> open</span>
+<span><kbd>Esc</kbd> close</span></div></div></div></div><main id=main-content><div class=af-single><div class=af-with-sidebar><nav class=af-sidebar><div class=af-sidebar-header><a href=/ai-foundations/guide/ class=af-sidebar-brand><svg class="af-sidebar-brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+<span class=af-sidebar-brand-text>智能体构建指南</span></a></div><div class=af-sidebar-body><div class=af-book-part data-af-part-id=part1><button type=button class=af-book-part__summary id=af-part-hd-part1 aria-expanded=true aria-controls=af-part-body-part1 aria-label="展开或折叠本 Part 下的章节">
+<span class=af-book-part__title>Part I · 认知与基础</span></button><div class=af-book-part__body id=af-part-body-part1 role=region aria-labelledby=af-part-hd-part1><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/preface/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+</span><span class=af-sidebar-parent-title>前言</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-preface aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-preface class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/preface/preface/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>原著前言</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/preface/writing-motivation/writing-motivation/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>写作动机</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/preface/mindset-navigation/mindset-navigation/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>学习导航</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/preface/reading-guide/reading-guide/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>阅读指南</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/fundamentals/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65.0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65.0 00-1.82-.33 1.65 1.65.0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65.0 00-1-1.51 1.65 1.65.0 00-1.82.33l-.06.06A2 2 0 113.37 17l.06-.06A1.65 1.65.0 003.76 15a1.65 1.65.0 00-1.51-1H2.2a2 2 0 110-4h.09A1.65 1.65.0 003.8 9a1.65 1.65.0 00-.33-1.82L3.41 7A2 2 0 116.24 4.2l.06.06A1.65 1.65.0 008.12 4a1.65 1.65.0 001-1.51V2.4a2 2 0 114 0v.09a1.65 1.65.0 001 1.51 1.65 1.65.0 001.82-.33l.06-.06A2 2 0 1120.83 7l-.06.06A1.65 1.65.0 0020.44 9a1.65 1.65.0 001.51 1H22a2 2 0 110 4h-.09a1.65 1.65.0 00-1.51 1z"/></svg>
+</span><span class=af-sidebar-parent-title>基础知识</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-fundamentals aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-fundamentals class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/core-concepts/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>核心概念速览</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/learning-path/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>学习路径建议</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/fundamentals/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>AI 基础知识（原文）</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/ai-landscape/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>大模型技术全景</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/machine-learning/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>机器学习基础</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/how-ai-model-think/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>大模型如何思考</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/transformer/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Transformer</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/attention/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>注意力机制</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/kv-cache/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>KV 缓存</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/rlhf/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>RLHF</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/pre-training/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>预训练</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/fine-tuning/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>微调</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/fundamentals/ai-model-training-engineering/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>训练工程化路径</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/llmeco/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><path d="M5 12c4.5.0 7-3 9-7 1 4 3 7 7 7-4 0-6 3-7 7-2-4-4.5-7-9-7z"/></svg>
+</span><span class=af-sidebar-parent-title>大模型开源生态</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-llmeco aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-llmeco class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/llmeco/llm/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>大模型时代的开源生态简介</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/llmeco/open-model/open-model/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>开源定义：从开放代码到开放权重</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/llmeco/model-overview/model-overview/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>主流开源大模型对比与选型指南</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/llmeco/model-evaluation/model-evaluation/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>模型评估</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/llmeco/model-selection/model-selection/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>开源大模型选型</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/llmeco/inferences-overview/inferences-overview/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>大模型推理系统全景</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/llmeco/community/community/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>大模型开源生态简介（社区）</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/governance/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><path d="M12 2l7 3v6c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V5l7-3z"/></svg>
+</span><span class=af-sidebar-parent-title>AI 治理体系</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-governance aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-governance class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/governance/governance/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>AI 治理体系概述</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/governance/aaif/aaif/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>智能体式 AI 基金会（AAIF）</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/governance/sovereign-ai/sovereign-ai/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>主权 AI：国家级治理结构</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/governance/principles/principles/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>智能体的安全设计原则</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/agi/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><path d="M9.5 3A2.5 2.5.0 007.05 5h-.6A2.45 2.45.0 004 7.45v.1A2.45 2.45.0 006.45 10h.6A2.5 2.5.0 109.5 3z"/><path d="M14.5 18a2.5 2.5.0 102.45-2h.6A2.45 2.45.0 0020 13.55v-.1A2.45 2.45.0 0017.55 11h-.6A2.5 2.5.0 1014.5 18z"/><path d="M8 8l8 8"/></svg>
+</span><span class=af-sidebar-parent-title>通用人工智能（AGI）</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-agi aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-agi class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agi/agi/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>通用人工智能（AGI）概览</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agi/definition/definition/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>AGI 的定义与概念</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agi/core-capabilities/core-capabilities/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>AGI 的核心特征与能力</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agi/world-models-spatial-intelligence/world-models-spatial-intelligence/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>世界模型与空间智能</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agi/technical-paths/technical-paths/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>AGI 的技术路径与挑战</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agi/impact-ethics/impact-ethics/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>AGI 的影响与伦理考量</span></a></li></ul></div></div></div><div class=af-book-part data-af-part-id=part2><button type=button class=af-book-part__summary id=af-part-hd-part2 aria-expanded=true aria-controls=af-part-body-part2 aria-label="展开或折叠本 Part 下的章节">
+<span class=af-book-part__title>Part II · AI 原生基础设施</span></button><div class=af-book-part__body id=af-part-body-part2 role=region aria-labelledby=af-part-hd-part2><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/prompt/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><path d="M12 2v5m0 10v5M4.93 4.93l3.54 3.54m7.06 7.06 3.54 3.54M2 12h5m10 0h5M4.93 19.07l3.54-3.54m7.06-7.06 3.54-3.54"/><circle cx="12" cy="12" r="3"/></svg>
+</span><span class=af-sidebar-parent-title>提示词工程</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-prompt aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-prompt class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/prompt/prompt-overview/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>概述</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/prompt/techniques/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>核心技术</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/prompt/output-config/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>输出配置</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/prompt/prompt-best-practices/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>最佳实践</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/prompt/jinja2/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Jinja2 提示词模板</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/prompt/prompt-engineering/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>面向工程环境的提示词设计</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/prompt/promptops/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>PromptOps 工作流实践</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/prompt/mcp-integration/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>MCP 集成</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/prompt/advanced/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>高级技巧</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/mcp/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><path d="M9 18l6-6-6-6"/><path d="M5 18l6-6-6-6"/><path d="M15 18l4-4-4-4"/></svg>
+</span><span class=af-sidebar-parent-title>MCP</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-mcp aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-mcp class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/mcp-overview/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>概述</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/background/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>背景</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/code-execution/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>代码执行模式</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/architecture/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>协议架构</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/json-rpc/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>JSON-RPC</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/development/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>示例代码</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/ecosystem/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>生态系统</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/case-studies/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>案例研究</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/design/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>最佳实践</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/mcp/future/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>未来趋势</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/rag/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5"/><path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg>
+</span><span class=af-sidebar-parent-title>RAG 工程</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-rag aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-rag class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/rag/rag-overview/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>概述</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/rag/embedding/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>向量与文本表示</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/rag/vector-databases/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>向量数据库选型</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/rag/document-processing/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>文档处理</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/rag/langchain-llamaindex/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>框架实践</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/rag/rag-best-practices/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>最佳实践</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/rag/rag-observability/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>RAG 可观测性</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/rag/agentic-rag/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Agentic RAG</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/context/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>
+</span><span class=af-sidebar-parent-title>上下文工程</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-context aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-context class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/context/context/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>概述</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/context/modeling/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>上下文建模</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/context/trust-eval/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>可信性与评测</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/context/real-time/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>实时上下文</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/context/lifecycle/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>生命周期与编译模型</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/context/markdown-as-semantic-ir/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Markdown 语义表示层</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/vllm/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><path d="M4 20l6-16m4 16 6-16"/><path d="M10 12h4"/></svg>
+</span><span class=af-sidebar-parent-title>vLLM</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-vllm aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-vllm class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/vllm/local-inference/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>本地推理服务</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/vllm/inference-accelerate/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>推理加速</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/vllm/vllm-in-prod/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>部署与性能优化</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-context-active"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/playbook/ class="af-sidebar-parent-link is-active"><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><path d="M8 5l11 7-11 7V5z"/></svg>
+</span><span class=af-sidebar-parent-title>项目实战</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=true aria-controls=af-br-ai-foundations-guide-playbook aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-playbook class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/ai-native-apps/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>AI 原生应用架构简介</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/local-development/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>本地开发环境搭建</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/llm-reference/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>LLM 推理与调度实操</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/hallucination/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>降低幻觉</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/pytorch/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>PyTorch 入门与性能分析</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/sglang-engineering/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>SGLang 工程化与性能优化</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/hugging-face/ class="af-sidebar-leaf-link is-active"><span class=af-sidebar-leaf-text>Hugging Face LoRA 微调</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/sglang/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>SGLang 结构化输出与函数调用</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/template/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>应用开发模板</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/playbook/model-refine/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>开源模型结构与微调实战</span></a></li></ul></div></div></div><div class=af-book-part data-af-part-id=part3><button type=button class=af-book-part__summary id=af-part-hd-part3 aria-expanded=true aria-controls=af-part-body-part3 aria-label="展开或折叠本 Part 下的章节">
+<span class=af-book-part__title>Part III · 智能体</span></button><div class=af-book-part__body id=af-part-body-part3 role=region aria-labelledby=af-part-hd-part3><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/agents/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+</span><span class=af-sidebar-parent-title>智能体</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-agents aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-agents class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agents/single-agent/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>单智能体工作流</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agents/multi-agent/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>多智能体协同</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agents/governance/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>观测、评估与安全治理</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/agent/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>
+</span><span class=af-sidebar-parent-title>智能体与自动化工作流</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-agent aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-agent class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/google-guide/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>概述</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/agent-basics/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>核心原理</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/agent-context-engineering/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>智能体架构与上下文工程</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/from-scratch-python/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>从零构建智能体（Python）</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/langchain/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>使用 LangChain 构建智能体</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/langgraph/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>LangGraph 多工具智能体</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/multi-agent/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>多智能体协同</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/autogen/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>AutoGen 多智能体工作流</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/agent-data-protocol/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Agent Data Protocol</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/agentbase/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>数据库智能体</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/openclaw/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>OpenClaw</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/agent/agentic-web/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>智能体网络（Agentic Web）</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/runtime/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>
+</span><span class=af-sidebar-parent-title>智能体运行时</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-runtime aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-runtime class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/runtime-overview/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>概览</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/agent-engineering-failure-modes/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>失败模式与边界条件</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/agent-execution-context/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>运行态模型</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/why-agentic-runtime/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>为什么智能体需要运行时</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/agent-vs-microservice-serverless/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Agent vs 微服务 vs Serverless</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/session-task-excution-graph/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>状态语义与执行图</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/agent-control-loop/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>自治闭环</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/agent-as-workload/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>智能体作为 Workload</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/sandbox/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Agent Sandbox</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/cost-model/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>运行时成本模型</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/runtime/capabilities/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>能力模型</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/sdd/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>
+</span><span class=af-sidebar-parent-title>规范驱动开发（SDD）</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-sdd aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-sdd class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/sdd/sdd-overview/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>概述</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/sdd/prompts/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Prompts</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/sdd/rules/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Rules</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/sdd/agents/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>AGENTS.md</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/sdd/skills/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>Agent Skill</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/sdd/speckit/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>SpecKit</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/sdd/openspec/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>OpenSpec</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/sdd/methodology/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>方法论与工程演进</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/sdd/disposable-app/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>一次性应用</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/langchain/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>
+</span><span class=af-sidebar-parent-title>LangChain 与 LangGraph</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-langchain aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-langchain class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/langchain/introduction/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>LangChain 简介</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/langchain/core-concepts/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>核心概念</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/langchain/langchain-best-practices/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>最佳实践</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/langchain/practical-guide/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>实战指南</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/langchain/deployment-guide/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>部署指南</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/langchain/troubleshooting/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>排障指南</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/langchain/summary/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>总结</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/vibe-coding/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>
+</span><span class=af-sidebar-parent-title>氛围编程与智能体协作</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-vibe-coding aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-vibe-coding class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/vibe-coding/vibe-coding-overview/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>概述</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/vibe-coding/languages/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>编程语言选择</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/vibe-coding/level-path/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>分层路径</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/vibe-coding/toolstack/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>工具栈与工作流</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/vibe-coding/opencode/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>OpenCode 与 Oh My OpenCode</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/vibe-coding/vibe-testing/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>氛围测试</span></a></li></ul></div><div class="af-sidebar-toc-item af-sidebar-toc-item--branch is-branch-collapsed"><div class=af-sidebar-parent-row><a href=/ai-foundations/guide/appendix/ class=af-sidebar-parent-link><span class=af-sidebar-link-icon><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>
+</span><span class=af-sidebar-parent-title>附录与速查手册</span>
+</a><button type=button class=af-sidebar-branch-toggle aria-expanded=false aria-controls=af-br-ai-foundations-guide-appendix aria-label=展开或折叠子章节><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><ul id=af-br-ai-foundations-guide-appendix class=af-sidebar-leaves><li class=af-sidebar-leaf><a href=/ai-foundations/guide/appendix/faq/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>FAQ</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/appendix/glossary/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>词汇表</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/appendix/protocols/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>协议解析</span></a></li><li class=af-sidebar-leaf><a href=/ai-foundations/guide/appendix/references/ class=af-sidebar-leaf-link><span class=af-sidebar-leaf-text>参考资料</span></a></li></ul></div></div></div></div></nav><script>(function(){"use strict";var e,o,i,a="af-sidebar-branch:v1:";function n(e){return a+e}function t(e,t){if(!e||!e.classList.contains("af-sidebar-toc-item--branch"))return;var n=e.querySelector(".af-sidebar-branch-toggle");if(!n)return;n.setAttribute("aria-expanded",t?"true":"false"),e.classList.toggle("is-branch-collapsed",!t)}function s(e){try{var t=localStorage.getItem(n(e));if(t==="1")return!0;if(t==="0")return!1}catch{}return null}function d(e,t){try{localStorage.setItem(n(e),t?"1":"0")}catch{}}function r(e){var t=e.querySelector(".af-sidebar-branch-toggle");return t&&t.getAttribute("aria-controls")||""}if(e=document.querySelector(".af-sidebar"),!e)return;o=e.getAttribute("data-af-sidebar-book-home")==="1",e.querySelectorAll(".af-sidebar-toc-item--branch").forEach(function(e){var i,a,n=r(e);if(!n)return;if(o){t(e,!1);return}if(e.classList.contains("is-context-active")){a=s(n),a===!1?t(e,!1):t(e,!0);return}i=s(n),i===!0?t(e,!0):i===!1&&t(e,!1)}),i="af-sidebar-part:v1:";function c(e){return i+e}function l(e,t){e.classList.toggle("is-part-collapsed",t);var n=e.querySelector(".af-book-part__summary");n&&n.setAttribute("aria-expanded",t?"false":"true")}e.querySelectorAll(".af-book-part[data-af-part-id]").forEach(function(e){var t=e.getAttribute("data-af-part-id");if(!t)return;try{localStorage.getItem(c(t))==="0"&&l(e,!0)}catch{}}),e.setAttribute("data-af-sidebar-hydrated","1")})()</script><div class=af-main-area><header class=af-chapter-header><div class=container><nav class=af-breadcrumb aria-label=breadcrumb><a href=/>首页</a>
+<span class=sep>/</span>
+<a href=https://martinsky999.github.io/ai-foundations/guide/>智能体构建指南</a>
+<span class=sep>/</span>
+<span class=current>Hugging Face Transformers + PEFT 的 LoRA 微调 | Jimmy Song</span></nav><div class=af-chapter-title-row><h1>Hugging Face Transformers + PEFT 的 LoRA 微调 | Jimmy Song</h1></div></div></header><div class=af-reading-layout><main class=af-reading-content><h1 id=hugging-face-transformers--peft-的-lora-微调--jimmy-song>Hugging Face Transformers + PEFT 的 LoRA 微调 | Jimmy Song</h1><blockquote><p>让大模型</p><h4 id=大模型large-language-model>大模型（Large Language Model）</h4><p>参数规模巨大的深度学习模型，通常指具有数十亿到数万亿参数的语言模型。</p><p>微调变得轻量灵活，LoRA 让每个人都能拥有自己的 AI。</p></blockquote><p>Hugging Face</p><h4 id=hugging-face>Hugging Face</h4><p>AI 模型的共享平台，提供预训练模型与工具。</p><p>的 Transformers 库结合 PEFT（Parameter-Efficient Fine-Tuning，参数高效微调）提供了便捷的接口来对大语言模型进行参数高效微调（PEFT）。其中，LoRA（Low-Rank Adaptation，低秩适配）是一种流行的 PEFT 方法，通过在预训练模型的部分权重上添加低秩矩阵实现微调，而非调整原模型的大量参数。这样可以大幅减少需要训练的参数量，从而降低显存和算力需求，使得在消费级硬件上微调大模型成为可能。</p><h2 id=背景原理与核心概念>背景原理与核心概念</h2><p>在特定业务场景下，企业往往希望微调（Fine-tuning</p><h4 id=fine-tuning微调>Fine-tuning（微调）</h4><p>在预训练模型基础上进行额外训练，使模型适应特定任务或领域。</p><p>）大模型以注入自有数据或偏好。LoRA（Low-Rank Adaptation）是一种流行的参数高效微调方法，它通过为预训练模型的权重添加低秩矩阵实现微调，而非调整原模型的大量参数。</p><p>具体来说，LoRA</p><h4 id=lora低秩自适应>LoRA（低秩自适应）</h4><p>Low-Rank Adaptation，一种高效的大模型微调技术。</p><p>会在模型的某些权重矩阵上引入两个小型可训练矩阵（通常秩 r 很小，如 4 或 8），只训练这部分新增参数，而冻结原模型的权重不变。经过训练后，在推理阶段这些低秩“适配器”的权重将与原权重相加，产生一个定制化的模型输出。</p><p>LoRA 的核心优势是大幅减少需要训练</p><h4 id=训练training>训练（Training）</h4><p>使用数据集调整模型参数的过程，使模型能够学习数据中的模式。</p><p>的参数量。例如，对一个 12 亿参数的模型应用 LoRA 微调，实际训练的参数可能不到原来的 0.2%。Hugging Face 的 PEFT 库提供的统计显示：在一个 12.3 亿参数的 mt0 模型上，LoRA（r=8）仅引入大约 236 万可训练参数，占比 0.19%。</p><p>如此小的训练开销意味着：</p><ul><li>资源需求低：微调时显著降低了显存和算力占用，使得在消费级硬件乃至 CPU 上微调小模型成为可能。</li><li>训练速度快：需要更新的参数少，单步更新计算开销小，一定数据量下收敛更快。</li><li>多任务适配：可以为同一个基础模型训练多个不同任务的 LoRA 适配器，在推理时按需加载对应适配器实现定制化。这样一来，一个基座模型 + 多套 LoRA 权重即可服务于多种场景，内存开销远低于为每个任务保存一个完整模型。</li></ul><p>需要强调，LoRA 在推理时对速度几乎无影响——因为只是增加了对少量权重的线性组合计算。同时它不改变模型结构，所以不会影响上下文长度等模型原有特性。</p><h2 id=安装与环境准备>安装与环境准备</h2><p>在本节中，我们将介绍如何准备 Hugging Face Transformers 与 PEFT</p><h4 id=peft参数高效微调>PEFT（参数高效微调）</h4><p>以少量可训练参数适配任务，降低训练成本。</p><p>库的环境，并说明硬件要求。</p><p>请确保已安装以下包：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pip install transformers peft datasets
+</span></span></code></pre></div><blockquote><p>[!note-container] Note-container
+提示</p><p>如需加速训练过程，建议在有 GPU</p><h4 id=gpu图形处理器>GPU（图形处理器）</h4><p>并行计算利器，常用于深度学习训练。</p><p>的环境执行，或安装 <code>accelerate</code> 配合多线程加速 CPU 运算。</p></blockquote><p>本示例选择 Meta 的 OPT-125M 作为基底模型（约 1.2 亿参数），体量小便于 CPU 微调。此外还需要准备一小份示例数据（例如对话或问答数据）。这里为了演示，我们构造一个极简的合成数据集。</p><h2 id=微调与运行步骤>微调与运行步骤</h2><p>下面详细介绍 LoRA 微调的完整流程，包括模型加载、配置、数据准备、训练与推理。</p><p>首先，加载预训练模型和分词器：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>transformers</span> <span class=kn>import</span> <span class=n>AutoModelForCausalLM</span><span class=p>,</span> <span class=n>AutoTokenizer</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>model_name</span> <span class=o>=</span> <span class=s2>&#34;facebook/opt-125m&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>model</span> <span class=o>=</span> <span class=n>AutoModelForCausalLM</span><span class=o>.</span><span class=n>from_pretrained</span><span class=p>(</span><span class=n>model_name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>tokenizer</span> <span class=o>=</span> <span class=n>AutoTokenizer</span><span class=o>.</span><span class=n>from_pretrained</span><span class=p>(</span><span class=n>model_name</span><span class=p>,</span> <span class=n>use_fast</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
+</span></span></code></pre></div><p>由于 OPT 是 Decoder 模型，我们使用 <code>AutoModelForCausalLM</code> 。加载后 <code>model</code> 默认在 CPU。</p><p>接下来，准备 LoRA 配置并应用 PEFT：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>peft</span> <span class=kn>import</span> <span class=n>LoraConfig</span><span class=p>,</span> <span class=n>get_peft_model</span><span class=p>,</span> <span class=n>TaskType</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>peft_config</span> <span class=o>=</span> <span class=n>LoraConfig</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>task_type</span><span class=o>=</span><span class=n>TaskType</span><span class=o>.</span><span class=n>CAUSAL_LM</span><span class=p>,</span>   <span class=c1># 因为是自回归语言模型</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>inference_mode</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span>           <span class=c1># 训练模式</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>r</span><span class=o>=</span><span class=mi>8</span><span class=p>,</span> <span class=n>lora_alpha</span><span class=o>=</span><span class=mi>16</span><span class=p>,</span> <span class=n>lora_dropout</span><span class=o>=</span><span class=mf>0.05</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>target_modules</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;q_proj&#34;</span><span class=p>,</span> <span class=s2>&#34;v_proj&#34;</span><span class=p>]</span>  <span class=c1># 指定只在注意力层的投影矩阵应用 LoRA</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>model</span> <span class=o>=</span> <span class=n>get_peft_model</span><span class=p>(</span><span class=n>model</span><span class=p>,</span> <span class=n>peft_config</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>model</span><span class=o>.</span><span class=n>print_trainable_parameters</span><span class=p>()</span>
+</span></span></code></pre></div><p>以上配置创建了一个 LoRA 设置：秩 r=8，LoRA 内部尺度 alpha=16，dropout 5%。我们限定了在 OPT 结构中相应的 Q,K 投影层添加 LoRA 参数。 <code>get_peft_model</code> 会返回一个 PEFT 封装的模型，其中原始模型参数被冻结，新加的 LoRA 参数将参与训练。调用 <code>print_trainable_parameters()</code> 可以看到当前可训练参数占比，例如输出类似：“ <code>trainable params: 104,000 || all params: 125,M || trainable%: 0.08%</code> ”。</p><p>然后，准备训练数据。这里我们构造一个简单的训练样本列表：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>train_data</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=p>{</span><span class=s2>&#34;prompt&#34;</span><span class=p>:</span> <span class=s2>&#34;Q: 你好，你是谁？</span><span class=se>\n</span><span class=s2>A:&#34;</span><span class=p>,</span> <span class=s2>&#34;response&#34;</span><span class=p>:</span> <span class=s2>&#34; 我是一个 AI 语言模型。&#34;</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=p>{</span><span class=s2>&#34;prompt&#34;</span><span class=p>:</span> <span class=s2>&#34;Q: 今天天气怎么样？</span><span class=se>\n</span><span class=s2>A:&#34;</span><span class=p>,</span> <span class=s2>&#34;response&#34;</span><span class=p>:</span> <span class=s2>&#34; 很抱歉，我无法获取实时天气信息。&#34;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 转换为 Dataset</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>datasets</span> <span class=kn>import</span> <span class=n>Dataset</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>dataset</span> <span class=o>=</span> <span class=n>Dataset</span><span class=o>.</span><span class=n>from_list</span><span class=p>(</span><span class=n>train_data</span><span class=p>)</span>
+</span></span></code></pre></div><p>每条数据包含一个 <code>prompt</code> 和期望的 <code>response</code> 。实际应用中应替换为真实任务数据。</p><p>接下来，定义训练流程，使用 Transformers 自带的 Trainer 进行微调：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>transformers</span> <span class=kn>import</span> <span class=n>Trainer</span><span class=p>,</span> <span class=n>TrainingArguments</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 定义生成训练样本的函数（将 prompt 和 response 拼接）</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>preprocess</span><span class=p>(</span><span class=n>example</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>text</span> <span class=o>=</span> <span class=n>example</span><span class=p>[</span><span class=s2>&#34;prompt&#34;</span><span class=p>]</span> <span class=o>+</span> <span class=n>example</span><span class=p>[</span><span class=s2>&#34;response&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>tokens</span> <span class=o>=</span> <span class=n>tokenizer</span><span class=p>(</span><span class=n>text</span><span class=p>,</span> <span class=n>truncation</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>padding</span><span class=o>=</span><span class=s2>&#34;max_length&#34;</span><span class=p>,</span> <span class=n>max_length</span><span class=o>=</span><span class=mi>128</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 构造 labels，只计算答案部分的 loss</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>user_len</span> <span class=o>=</span> <span class=nb>len</span><span class=p>(</span><span class=n>tokenizer</span><span class=p>(</span><span class=n>example</span><span class=p>[</span><span class=s2>&#34;prompt&#34;</span><span class=p>])[</span><span class=s2>&#34;input_ids&#34;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>tokens</span><span class=p>[</span><span class=s2>&#34;labels&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=p>[</span><span class=o>-</span><span class=mi>100</span><span class=p>]</span><span class=o>*</span><span class=n>user_len</span> <span class=o>+</span> <span class=n>tokens</span><span class=p>[</span><span class=s2>&#34;input_ids&#34;</span><span class=p>][</span><span class=n>user_len</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>tokens</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>train_dataset</span> <span class=o>=</span> <span class=n>dataset</span><span class=o>.</span><span class=n>map</span><span class=p>(</span><span class=n>preprocess</span><span class=p>,</span> <span class=n>remove_columns</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;prompt&#34;</span><span class=p>,</span> <span class=s2>&#34;response&#34;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>training_args</span> <span class=o>=</span> <span class=n>TrainingArguments</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>output_dir</span><span class=o>=</span><span class=s2>&#34;lora-opt125m&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>per_device_train_batch_size</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>num_train_epochs</span><span class=o>=</span><span class=mi>5</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>learning_rate</span><span class=o>=</span><span class=mf>1e-4</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>logging_steps</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>save_steps</span><span class=o>=</span><span class=mi>50</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>save_total_limit</span><span class=o>=</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>trainer</span> <span class=o>=</span> <span class=n>Trainer</span><span class=p>(</span><span class=n>model</span><span class=o>=</span><span class=n>model</span><span class=p>,</span> <span class=n>args</span><span class=o>=</span><span class=n>training_args</span><span class=p>,</span> <span class=n>train_dataset</span><span class=o>=</span><span class=n>train_dataset</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>trainer</span><span class=o>.</span><span class=n>train</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>model</span><span class=o>.</span><span class=n>save_pretrained</span><span class=p>(</span><span class=s2>&#34;lora-opt125m&#34;</span><span class=p>)</span>  <span class=c1># 保存 LoRA 微调后的模型适配器</span>
+</span></span></code></pre></div><p>上述步骤中，我们对每条输入做了预处理，将用户问和回答拼接，并设置了 labels 使得模型仅在回答部分计算 loss（防止模型改变提示部分）。我们使用小批量和较低学习率训练若干轮。由于示例数据极简且训练轮次少，几秒即可完成（在 CPU 上可能需要几分钟）。保存后的模型权重文件夹 <code>lora-opt125m/</code> 中主要包含 LoRA 的适配器权重，而非整个模型。</p><p>最后，加载和推理。微调完成后，我们可以在 Mac 上加载基础模型+LoRA 适配器进行推理：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>peft</span> <span class=kn>import</span> <span class=n>PeftModel</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>base_model</span> <span class=o>=</span> <span class=n>AutoModelForCausalLM</span><span class=o>.</span><span class=n>from_pretrained</span><span class=p>(</span><span class=n>model_name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>model</span> <span class=o>=</span> <span class=n>PeftModel</span><span class=o>.</span><span class=n>from_pretrained</span><span class=p>(</span><span class=n>base_model</span><span class=p>,</span> <span class=s2>&#34;lora-opt125m&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>model</span><span class=o>.</span><span class=n>eval</span><span class=p>()</span>  <span class=c1># 切换到推理模式</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>prompt</span> <span class=o>=</span> <span class=s2>&#34;Q: 你好，你是谁？</span><span class=se>\n</span><span class=s2>A:&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>input_ids</span> <span class=o>=</span> <span class=n>tokenizer</span><span class=p>(</span><span class=n>prompt</span><span class=p>,</span> <span class=n>return_tensors</span><span class=o>=</span><span class=s2>&#34;pt&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>input_ids</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>output_ids</span> <span class=o>=</span> <span class=n>model</span><span class=o>.</span><span class=n>generate</span><span class=p>(</span><span class=n>input_ids</span><span class=p>,</span> <span class=n>max_new_tokens</span><span class=o>=</span><span class=mi>50</span><span class=p>,</span> <span class=n>do_sample</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>answer</span> <span class=o>=</span> <span class=n>tokenizer</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=n>output_ids</span><span class=p>[</span><span class=mi>0</span><span class=p>][</span><span class=n>input_ids</span><span class=o>.</span><span class=n>size</span><span class=p>(</span><span class=mi>1</span><span class=p>):],</span> <span class=n>skip_special_tokens</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>answer</span><span class=p>)</span>
+</span></span></code></pre></div><p>这里，我们用基础模型加载 LoRA 权重（ <code>PeftModel.from_pretrained</code> 会自动将 LoRA 权重合并到模型中仅在推理时生效）。然后对示例问题生成回答。理想情况下，应输出类似训练中给定的回答：“我是一个 AI 语言模型。”。您也可以尝试其他提示，模型会在微调知识的影响下产出新的结果。</p><h2 id=推理方式与参数量对比>推理方式与参数量对比</h2><p>通过上述流程，我们完成了 LoRA 微调示例。在这个例子里，LoRA 的参数量和推理方式有如下特点。</p><ul><li>参数量对比：OPT-125M 模型有约 1.25 亿参数，而我们 LoRA 引入的参数大约只有十万级别，占比不到 0.1%。实际打印结果也验证了这一点。在更大型的模型上这种差异更为明显：LoRA 秩固定时，模型越大，训练参数占比越小。例如对 13B 模型用 LoRA，训练参数可能仅为原模型的万分之几。这体现了 LoRA 作为参数高效微调<h4 id=参数高效微调parameter-efficient-fine-tuning>参数高效微调（Parameter-Efficient Fine-tuning）</h4>只微调模型少量参数的方法，大幅降低训练成本和存储需求。
+（PEFT）方法的强大之处。</li><li>推理方式：LoRA 微调后的模型推理时，需要将 LoRA 适配器与基础模型合并。上面的 <code>PeftModel.from_pretrained</code> 实际上在内部将 LoRA 权重加到了 base 模型对应层上（仅在 forward 时暂时叠加，并不改动原权重）。也可以选择直接将 LoRA 权重合并到模型得到一个新的模型（这在 PEFT 库中也有支持），但通常保留分离可以灵活启停不同任务的 LoRA 模块。推理调用与原模型相同，例如使用 <code>model.generate()</code> 或 <code>pipeline</code> 等皆可。由于 LoRA 不改变模型结构和大部分权重，推理速度与原模型几乎无差别。</li></ul><h2 id=完整示例>完整示例</h2><p>为了方便复现，以下是完整的 LoRA 微调示例代码，您可以保存为 <code>lora_finetune_opt125m.py</code> 并运行：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=m>1</span>
+</span></span><span class=line><span class=cl>  <span class=m>2</span>
+</span></span><span class=line><span class=cl>  <span class=m>3</span>
+</span></span><span class=line><span class=cl>  <span class=m>4</span>
+</span></span><span class=line><span class=cl>  <span class=m>5</span>
+</span></span><span class=line><span class=cl>  <span class=m>6</span>
+</span></span><span class=line><span class=cl>  <span class=m>7</span>
+</span></span><span class=line><span class=cl>  <span class=m>8</span>
+</span></span><span class=line><span class=cl>  <span class=m>9</span>
+</span></span><span class=line><span class=cl> <span class=m>10</span>
+</span></span><span class=line><span class=cl> <span class=m>11</span>
+</span></span><span class=line><span class=cl> <span class=m>12</span>
+</span></span><span class=line><span class=cl> <span class=m>13</span>
+</span></span><span class=line><span class=cl> <span class=m>14</span>
+</span></span><span class=line><span class=cl> <span class=m>15</span>
+</span></span><span class=line><span class=cl> <span class=m>16</span>
+</span></span><span class=line><span class=cl> <span class=m>17</span>
+</span></span><span class=line><span class=cl> <span class=m>18</span>
+</span></span><span class=line><span class=cl> <span class=m>19</span>
+</span></span><span class=line><span class=cl> <span class=m>20</span>
+</span></span><span class=line><span class=cl> <span class=m>21</span>
+</span></span><span class=line><span class=cl> <span class=m>22</span>
+</span></span><span class=line><span class=cl> <span class=m>23</span>
+</span></span><span class=line><span class=cl> <span class=m>24</span>
+</span></span><span class=line><span class=cl> <span class=m>25</span>
+</span></span><span class=line><span class=cl> <span class=m>26</span>
+</span></span><span class=line><span class=cl> <span class=m>27</span>
+</span></span><span class=line><span class=cl> <span class=m>28</span>
+</span></span><span class=line><span class=cl> <span class=m>29</span>
+</span></span><span class=line><span class=cl> <span class=m>30</span>
+</span></span><span class=line><span class=cl> <span class=m>31</span>
+</span></span><span class=line><span class=cl> <span class=m>32</span>
+</span></span><span class=line><span class=cl> <span class=m>33</span>
+</span></span><span class=line><span class=cl> <span class=m>34</span>
+</span></span><span class=line><span class=cl> <span class=m>35</span>
+</span></span><span class=line><span class=cl> <span class=m>36</span>
+</span></span><span class=line><span class=cl> <span class=m>37</span>
+</span></span><span class=line><span class=cl> <span class=m>38</span>
+</span></span><span class=line><span class=cl> <span class=m>39</span>
+</span></span><span class=line><span class=cl> <span class=m>40</span>
+</span></span><span class=line><span class=cl> <span class=m>41</span>
+</span></span><span class=line><span class=cl> <span class=m>42</span>
+</span></span><span class=line><span class=cl> <span class=m>43</span>
+</span></span><span class=line><span class=cl> <span class=m>44</span>
+</span></span><span class=line><span class=cl> <span class=m>45</span>
+</span></span><span class=line><span class=cl> <span class=m>46</span>
+</span></span><span class=line><span class=cl> <span class=m>47</span>
+</span></span><span class=line><span class=cl> <span class=m>48</span>
+</span></span><span class=line><span class=cl> <span class=m>49</span>
+</span></span><span class=line><span class=cl> <span class=m>50</span>
+</span></span><span class=line><span class=cl> <span class=m>51</span>
+</span></span><span class=line><span class=cl> <span class=m>52</span>
+</span></span><span class=line><span class=cl> <span class=m>53</span>
+</span></span><span class=line><span class=cl> <span class=m>54</span>
+</span></span><span class=line><span class=cl> <span class=m>55</span>
+</span></span><span class=line><span class=cl> <span class=m>56</span>
+</span></span><span class=line><span class=cl> <span class=m>57</span>
+</span></span><span class=line><span class=cl> <span class=m>58</span>
+</span></span><span class=line><span class=cl> <span class=m>59</span>
+</span></span><span class=line><span class=cl> <span class=m>60</span>
+</span></span><span class=line><span class=cl> <span class=m>61</span>
+</span></span><span class=line><span class=cl> <span class=m>62</span>
+</span></span><span class=line><span class=cl> <span class=m>63</span>
+</span></span><span class=line><span class=cl> <span class=m>64</span>
+</span></span><span class=line><span class=cl> <span class=m>65</span>
+</span></span><span class=line><span class=cl> <span class=m>66</span>
+</span></span><span class=line><span class=cl> <span class=m>67</span>
+</span></span><span class=line><span class=cl> <span class=m>68</span>
+</span></span><span class=line><span class=cl> <span class=m>69</span>
+</span></span><span class=line><span class=cl> <span class=m>70</span>
+</span></span><span class=line><span class=cl> <span class=m>71</span>
+</span></span><span class=line><span class=cl> <span class=m>72</span>
+</span></span><span class=line><span class=cl> <span class=m>73</span>
+</span></span><span class=line><span class=cl> <span class=m>74</span>
+</span></span><span class=line><span class=cl> <span class=m>75</span>
+</span></span><span class=line><span class=cl> <span class=m>76</span>
+</span></span><span class=line><span class=cl> <span class=m>77</span>
+</span></span><span class=line><span class=cl> <span class=m>78</span>
+</span></span><span class=line><span class=cl> <span class=m>79</span>
+</span></span><span class=line><span class=cl> <span class=m>80</span>
+</span></span><span class=line><span class=cl> <span class=m>81</span>
+</span></span><span class=line><span class=cl> <span class=m>82</span>
+</span></span><span class=line><span class=cl> <span class=m>83</span>
+</span></span><span class=line><span class=cl> <span class=m>84</span>
+</span></span><span class=line><span class=cl> <span class=m>85</span>
+</span></span><span class=line><span class=cl> <span class=m>86</span>
+</span></span><span class=line><span class=cl> <span class=m>87</span>
+</span></span><span class=line><span class=cl> <span class=m>88</span>
+</span></span><span class=line><span class=cl> <span class=m>89</span>
+</span></span><span class=line><span class=cl> <span class=m>90</span>
+</span></span><span class=line><span class=cl> <span class=m>91</span>
+</span></span><span class=line><span class=cl> <span class=m>92</span>
+</span></span><span class=line><span class=cl> <span class=m>93</span>
+</span></span><span class=line><span class=cl> <span class=m>94</span>
+</span></span><span class=line><span class=cl> <span class=m>95</span>
+</span></span><span class=line><span class=cl> <span class=m>96</span>
+</span></span><span class=line><span class=cl> <span class=m>97</span>
+</span></span><span class=line><span class=cl> <span class=m>98</span>
+</span></span><span class=line><span class=cl> <span class=m>99</span>
+</span></span><span class=line><span class=cl><span class=m>100</span>
+</span></span><span class=line><span class=cl><span class=m>101</span>
+</span></span><span class=line><span class=cl><span class=m>102</span>
+</span></span><span class=line><span class=cl><span class=m>103</span>
+</span></span><span class=line><span class=cl><span class=m>104</span>
+</span></span><span class=line><span class=cl><span class=m>105</span>
+</span></span><span class=line><span class=cl><span class=m>106</span>
+</span></span><span class=line><span class=cl><span class=m>107</span>
+</span></span><span class=line><span class=cl><span class=m>108</span>
+</span></span><span class=line><span class=cl><span class=m>109</span>
+</span></span><span class=line><span class=cl><span class=m>110</span>
+</span></span><span class=line><span class=cl><span class=m>111</span>
+</span></span><span class=line><span class=cl><span class=m>112</span>
+</span></span><span class=line><span class=cl><span class=m>113</span>
+</span></span><span class=line><span class=cl><span class=m>114</span>
+</span></span><span class=line><span class=cl><span class=m>115</span>
+</span></span><span class=line><span class=cl><span class=m>116</span>
+</span></span><span class=line><span class=cl><span class=m>117</span>
+</span></span><span class=line><span class=cl><span class=m>118</span>
+</span></span><span class=line><span class=cl><span class=m>119</span>
+</span></span><span class=line><span class=cl><span class=m>120</span>
+</span></span><span class=line><span class=cl><span class=m>121</span>
+</span></span><span class=line><span class=cl><span class=m>122</span>
+</span></span><span class=line><span class=cl><span class=m>123</span>
+</span></span><span class=line><span class=cl><span class=m>124</span>
+</span></span><span class=line><span class=cl><span class=m>125</span>
+</span></span><span class=line><span class=cl><span class=m>126</span>
+</span></span><span class=line><span class=cl><span class=m>127</span>
+</span></span><span class=line><span class=cl><span class=m>128</span>
+</span></span><span class=line><span class=cl><span class=m>129</span>
+</span></span><span class=line><span class=cl><span class=m>130</span>
+</span></span><span class=line><span class=cl><span class=m>131</span>
+</span></span><span class=line><span class=cl><span class=m>132</span>
+</span></span><span class=line><span class=cl><span class=m>133</span>
+</span></span><span class=line><span class=cl><span class=m>134</span>
+</span></span><span class=line><span class=cl><span class=m>135</span>
+</span></span><span class=line><span class=cl><span class=m>136</span>
+</span></span><span class=line><span class=cl><span class=m>137</span>
+</span></span><span class=line><span class=cl><span class=m>138</span>
+</span></span><span class=line><span class=cl><span class=m>139</span>
+</span></span><span class=line><span class=cl><span class=m>140</span>
+</span></span><span class=line><span class=cl><span class=m>141</span>
+</span></span><span class=line><span class=cl><span class=m>142</span>
+</span></span><span class=line><span class=cl><span class=m>143</span>
+</span></span><span class=line><span class=cl><span class=m>144</span>
+</span></span><span class=line><span class=cl><span class=m>145</span>
+</span></span><span class=line><span class=cl><span class=m>146</span>
+</span></span><span class=line><span class=cl><span class=m>147</span>
+</span></span><span class=line><span class=cl><span class=m>148</span>
+</span></span><span class=line><span class=cl><span class=m>149</span>
+</span></span><span class=line><span class=cl><span class=m>150</span>
+</span></span><span class=line><span class=cl><span class=m>151</span>
+</span></span><span class=line><span class=cl><span class=m>152</span>
+</span></span><span class=line><span class=cl><span class=m>153</span>
+</span></span><span class=line><span class=cl><span class=m>154</span>
+</span></span><span class=line><span class=cl><span class=m>155</span>
+</span></span><span class=line><span class=cl><span class=m>156</span>
+</span></span><span class=line><span class=cl><span class=m>157</span>
+</span></span><span class=line><span class=cl><span class=m>158</span>
+</span></span><span class=line><span class=cl><span class=m>159</span>
+</span></span><span class=line><span class=cl><span class=m>160</span>
+</span></span><span class=line><span class=cl><span class=m>161</span>
+</span></span><span class=line><span class=cl><span class=m>162</span>
+</span></span><span class=line><span class=cl><span class=m>163</span>
+</span></span><span class=line><span class=cl><span class=m>164</span>
+</span></span><span class=line><span class=cl><span class=m>165</span>
+</span></span><span class=line><span class=cl><span class=m>166</span>
+</span></span><span class=line><span class=cl><span class=m>167</span>
+</span></span><span class=line><span class=cl><span class=m>168</span>
+</span></span><span class=line><span class=cl><span class=m>169</span>
+</span></span><span class=line><span class=cl><span class=m>170</span>
+</span></span><span class=line><span class=cl><span class=m>171</span>
+</span></span><span class=line><span class=cl>from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>from peft import LoraConfig, get_peft_model, TaskType, PeftModel
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>from datasets import Dataset
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>import torch
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># LoRA 微调 Hugging Face Transformers 示例</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 适用于 OPT-125M 小模型，CPU/GPU 均可运行</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>def main<span class=o>()</span>:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 1. 加载预训练模型和分词器</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>model_name</span> <span class=o>=</span> <span class=s2>&#34;facebook/opt-125m&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>model</span> <span class=o>=</span> AutoModelForCausalLM.from_pretrained<span class=o>(</span>model_name<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>tokenizer</span> <span class=o>=</span> AutoTokenizer.from_pretrained<span class=o>(</span>model_name, <span class=nv>use_fast</span><span class=o>=</span>False<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 添加 pad_token</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> tokenizer.pad_token is None:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        tokenizer.pad_token <span class=o>=</span> tokenizer.eos_token
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 2. 配置 LoRA 并应用 PEFT</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>peft_config</span> <span class=o>=</span> LoraConfig<span class=o>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>task_type</span><span class=o>=</span>TaskType.CAUSAL_LM,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>inference_mode</span><span class=o>=</span>False,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>r</span><span class=o>=</span>16,  <span class=c1># 增加 rank</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>lora_alpha</span><span class=o>=</span>32,  <span class=c1># 增加 alpha</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>lora_dropout</span><span class=o>=</span>0.05,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>target_modules</span><span class=o>=[</span><span class=s2>&#34;q_proj&#34;</span>, <span class=s2>&#34;v_proj&#34;</span>, <span class=s2>&#34;k_proj&#34;</span>, <span class=s2>&#34;out_proj&#34;</span><span class=o>]</span>  <span class=c1># 增加更多目标模块</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>model</span> <span class=o>=</span> get_peft_model<span class=o>(</span>model, peft_config<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    model.print_trainable_parameters<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 3. 构造训练数据（增加更多相似样本）</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>train_data</span> <span class=o>=</span> <span class=o>[</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>{</span><span class=s2>&#34;prompt&#34;</span>: <span class=s2>&#34;Q: Who are you?\nA:&#34;</span>, <span class=s2>&#34;response&#34;</span>: <span class=s2>&#34; I am an AI language model.&#34;</span><span class=o>}</span>,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>{</span><span class=s2>&#34;prompt&#34;</span>: <span class=s2>&#34;Q: Hello, who are you?\nA:&#34;</span>, <span class=s2>&#34;response&#34;</span>: <span class=s2>&#34; I am an AI language model.&#34;</span><span class=o>}</span>,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>{</span><span class=s2>&#34;prompt&#34;</span>: <span class=s2>&#34;Q: What are you?\nA:&#34;</span>, <span class=s2>&#34;response&#34;</span>: <span class=s2>&#34; I am an AI language model.&#34;</span><span class=o>}</span>,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>{</span><span class=s2>&#34;prompt&#34;</span>: <span class=s2>&#34;Q: Can you introduce yourself?\nA:&#34;</span>, <span class=s2>&#34;response&#34;</span>: <span class=s2>&#34; I am an AI language model.&#34;</span><span class=o>}</span>,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>{</span><span class=s2>&#34;prompt&#34;</span>: <span class=s2>&#34;Q: What&#39;s the weather today?\nA:&#34;</span>, <span class=s2>&#34;response&#34;</span>: <span class=s2>&#34; Sorry, I can&#39;t access real-time weather information.&#34;</span><span class=o>}</span>,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>{</span><span class=s2>&#34;prompt&#34;</span>: <span class=s2>&#34;Q: How is the weather?\nA:&#34;</span>, <span class=s2>&#34;response&#34;</span>: <span class=s2>&#34; Sorry, I can&#39;t access real-time weather information.&#34;</span><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>dataset</span> <span class=o>=</span> Dataset.from_list<span class=o>(</span>train_data<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 4. 数据预处理函数</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    def preprocess<span class=o>(</span>example<span class=o>)</span>:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>text</span> <span class=o>=</span> example<span class=o>[</span><span class=s2>&#34;prompt&#34;</span><span class=o>]</span> + example<span class=o>[</span><span class=s2>&#34;response&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>tokens</span> <span class=o>=</span> tokenizer<span class=o>(</span>text, <span class=nv>truncation</span><span class=o>=</span>True, <span class=nv>padding</span><span class=o>=</span><span class=s2>&#34;max_length&#34;</span>, <span class=nv>max_length</span><span class=o>=</span>128<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 修正标签处理</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>prompt_tokens</span> <span class=o>=</span> tokenizer<span class=o>(</span>example<span class=o>[</span><span class=s2>&#34;prompt&#34;</span><span class=o>]</span>, <span class=nv>add_special_tokens</span><span class=o>=</span>False<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>prompt_len</span> <span class=o>=</span> len<span class=o>(</span>prompt_tokens<span class=o>[</span><span class=s2>&#34;input_ids&#34;</span><span class=o>])</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>labels</span> <span class=o>=</span> tokens<span class=o>[</span><span class=s2>&#34;input_ids&#34;</span><span class=o>]</span>.copy<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 将 prompt 部分的标签设为 -100，只计算 response 部分的损失</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        labels<span class=o>[</span>:prompt_len<span class=o>]</span> <span class=o>=</span> <span class=o>[</span>-100<span class=o>]</span> * prompt_len
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        tokens<span class=o>[</span><span class=s2>&#34;labels&#34;</span><span class=o>]</span> <span class=o>=</span> labels
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> tokens
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>train_dataset</span> <span class=o>=</span> dataset.map<span class=o>(</span>preprocess, <span class=nv>remove_columns</span><span class=o>=[</span><span class=s2>&#34;prompt&#34;</span>, <span class=s2>&#34;response&#34;</span><span class=o>])</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 5. 训练参数设置</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>training_args</span> <span class=o>=</span> TrainingArguments<span class=o>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>output_dir</span><span class=o>=</span><span class=s2>&#34;lora-opt125m&#34;</span>,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>per_device_train_batch_size</span><span class=o>=</span>1,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>num_train_epochs</span><span class=o>=</span>10,  <span class=c1># 增加训练轮次</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>learning_rate</span><span class=o>=</span>2e-4,   <span class=c1># 增加学习率</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>logging_steps</span><span class=o>=</span>1,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>save_steps</span><span class=o>=</span>50,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>save_total_limit</span><span class=o>=</span>1,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>warmup_steps</span><span class=o>=</span>2,       <span class=c1># 添加预热</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>gradient_accumulation_steps</span><span class=o>=</span>2,  <span class=c1># 增加梯度累积</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>dataloader_pin_memory</span><span class=o>=</span>False,    <span class=c1># 禁用 pin_memory 避免 MPS 警告</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>remove_unused_columns</span><span class=o>=</span>False     <span class=c1># 避免列移除警告</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 6. 微调训练</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>trainer</span> <span class=o>=</span> Trainer<span class=o>(</span><span class=nv>model</span><span class=o>=</span>model, <span class=nv>args</span><span class=o>=</span>training_args, <span class=nv>train_dataset</span><span class=o>=</span>train_dataset<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    trainer.train<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    model.save_pretrained<span class=o>(</span><span class=s2>&#34;lora-opt125m&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;训练完成，LoRA 适配器已保存至 lora-opt125m/&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 7. 推理示例：加载 LoRA 权重并生成回答</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>base_model</span> <span class=o>=</span> AutoModelForCausalLM.from_pretrained<span class=o>(</span>model_name<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>lora_model</span> <span class=o>=</span> PeftModel.from_pretrained<span class=o>(</span>base_model, <span class=s2>&#34;lora-opt125m&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    lora_model.eval<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 使用与训练数据完全一致的 prompt 格式</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>prompt</span> <span class=o>=</span> <span class=s2>&#34;Q: Hello, who are you?\nA:&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>input_ids</span> <span class=o>=</span> tokenizer<span class=o>(</span>prompt, <span class=nv>return_tensors</span><span class=o>=</span><span class=s2>&#34;pt&#34;</span><span class=o>)</span>.input_ids
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 测试不同的生成设置</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;\n=== 不同生成设置的对比 ===&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 1. 贪婪搜索（确定性输出）</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;\n1. 贪婪搜索 (do_sample=False):&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    with torch.no_grad<span class=o>()</span>:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>attention_mask</span> <span class=o>=</span> <span class=o>(</span>input_ids !<span class=o>=</span> tokenizer.pad_token_id<span class=o>)</span>.long<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>output_ids</span> <span class=o>=</span> lora_model.generate<span class=o>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            input_ids,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>attention_mask</span><span class=o>=</span>attention_mask,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>max_new_tokens</span><span class=o>=</span>15,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>do_sample</span><span class=o>=</span>False,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>pad_token_id</span><span class=o>=</span>tokenizer.eos_token_id,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>eos_token_id</span><span class=o>=</span>tokenizer.eos_token_id
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>answer</span> <span class=o>=</span> tokenizer.decode<span class=o>(</span>output_ids<span class=o>[</span>0<span class=o>][</span>input_ids.size<span class=o>(</span>1<span class=o>)</span>:<span class=o>]</span>, <span class=nv>skip_special_tokens</span><span class=o>=</span>True<span class=o>)</span>.strip<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=s1>&#39;\n&#39;</span> in answer:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>answer</span> <span class=o>=</span> answer.split<span class=o>(</span><span class=s1>&#39;\n&#39;</span><span class=o>)[</span>0<span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        print<span class=o>(</span>f<span class=s2>&#34;输出：{answer}&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 2. 低温度采样（偏向确定性）</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;\n2. 低温度采样 (temperature=0.1):&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    with torch.no_grad<span class=o>()</span>:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>output_ids</span> <span class=o>=</span> lora_model.generate<span class=o>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            input_ids,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>attention_mask</span><span class=o>=</span>attention_mask,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>max_new_tokens</span><span class=o>=</span>15,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>do_sample</span><span class=o>=</span>True,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>temperature</span><span class=o>=</span>0.1,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>pad_token_id</span><span class=o>=</span>tokenizer.eos_token_id,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>eos_token_id</span><span class=o>=</span>tokenizer.eos_token_id
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>answer</span> <span class=o>=</span> tokenizer.decode<span class=o>(</span>output_ids<span class=o>[</span>0<span class=o>][</span>input_ids.size<span class=o>(</span>1<span class=o>)</span>:<span class=o>]</span>, <span class=nv>skip_special_tokens</span><span class=o>=</span>True<span class=o>)</span>.strip<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=s1>&#39;\n&#39;</span> in answer:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>answer</span> <span class=o>=</span> answer.split<span class=o>(</span><span class=s1>&#39;\n&#39;</span><span class=o>)[</span>0<span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        print<span class=o>(</span>f<span class=s2>&#34;输出：{answer}&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 3. 中等温度采样（平衡创造性和一致性）</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;\n3. 中等温度采样 (temperature=0.7):&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    with torch.no_grad<span class=o>()</span>:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>output_ids</span> <span class=o>=</span> lora_model.generate<span class=o>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            input_ids,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>attention_mask</span><span class=o>=</span>attention_mask,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>max_new_tokens</span><span class=o>=</span>15,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>do_sample</span><span class=o>=</span>True,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>temperature</span><span class=o>=</span>0.7,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>top_p</span><span class=o>=</span>0.9,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>pad_token_id</span><span class=o>=</span>tokenizer.eos_token_id,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>eos_token_id</span><span class=o>=</span>tokenizer.eos_token_id
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>answer</span> <span class=o>=</span> tokenizer.decode<span class=o>(</span>output_ids<span class=o>[</span>0<span class=o>][</span>input_ids.size<span class=o>(</span>1<span class=o>)</span>:<span class=o>]</span>, <span class=nv>skip_special_tokens</span><span class=o>=</span>True<span class=o>)</span>.strip<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=s1>&#39;\n&#39;</span> in answer:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>answer</span> <span class=o>=</span> answer.split<span class=o>(</span><span class=s1>&#39;\n&#39;</span><span class=o>)[</span>0<span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        print<span class=o>(</span>f<span class=s2>&#34;输出：{answer}&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 4. 高温度采样（更有创造性）</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;\n4. 高温度采样 (temperature=1.0):&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    with torch.no_grad<span class=o>()</span>:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>output_ids</span> <span class=o>=</span> lora_model.generate<span class=o>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            input_ids,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>attention_mask</span><span class=o>=</span>attention_mask,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>max_new_tokens</span><span class=o>=</span>15,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>do_sample</span><span class=o>=</span>True,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>temperature</span><span class=o>=</span>1.0,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>top_p</span><span class=o>=</span>0.9,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>pad_token_id</span><span class=o>=</span>tokenizer.eos_token_id,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>eos_token_id</span><span class=o>=</span>tokenizer.eos_token_id
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>answer</span> <span class=o>=</span> tokenizer.decode<span class=o>(</span>output_ids<span class=o>[</span>0<span class=o>][</span>input_ids.size<span class=o>(</span>1<span class=o>)</span>:<span class=o>]</span>, <span class=nv>skip_special_tokens</span><span class=o>=</span>True<span class=o>)</span>.strip<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=s1>&#39;\n&#39;</span> in answer:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nv>answer</span> <span class=o>=</span> answer.split<span class=o>(</span><span class=s1>&#39;\n&#39;</span><span class=o>)[</span>0<span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        print<span class=o>(</span>f<span class=s2>&#34;输出：{answer}&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;\n=== Temperature 参数说明 ===&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;• temperature=0.1: 输出更确定、保守&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;• temperature=0.7: 平衡确定性和创造性&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;• temperature=1.0: 输出更多样化、创造性&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    print<span class=o>(</span><span class=s2>&#34;• do_sample=False: 贪婪搜索，完全确定性输出&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=nv>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span>:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    main<span class=o>()</span>
+</span></span></code></pre></div><p>下面对 <code>lora_finetune_opt125m.py</code> 程序的主要步骤进行简要说明：</p><ul><li>导入依赖库：加载 Hugging Face Transformers、PEFT 和 Datasets 库，为模型微调和数据处理做准备。</li><li>加载预训练模型和分词器：使用 <code>AutoModelForCausalLM</code> 和 <code>AutoTokenizer</code> 加载 OPT-125M 基础模型及其分词器。</li><li>配置 LoRA 并应用 PEFT：通过 <code>LoraConfig</code> 设置 LoRA 参数（如秩 r、alpha、dropout），指定目标模块，并用 <code>get_peft_model</code> 封装模型，使 LoRA 参数可训练，原模型参数冻结。</li><li>构造训练数据集：创建包含 prompt<h4 id=prompt提示词>Prompt（提示词）</h4>输入给 AI 模型的指令或文本。
+和 response 的训练样本，并用 Datasets 库转换为标准数据集格式。</li><li>预处理数据：定义 <code>preprocess</code> 函数，将 prompt 和 response 拼接，设置 labels 只在回答部分计算 loss，保证模型学习目标明确。</li><li>设置训练参数并微调：通过 <code>TrainingArguments</code> 配置训练参数（如 batch size<h4 id=batch-size批次大小>Batch Size（批次大小）</h4>一次训练迭代使用的样本数量，影响训练速度和模型效果。
+、epoch、学习率等），使用 <code>Trainer</code> 进行模型微调，并保存 LoRA 适配器权重。</li><li>加载微调后的模型进行推理：用 <code>PeftModel.from_pretrained</code> 加载基础模型和 LoRA 适配器，输入 prompt 进行文本生成，输出微调后的模型回答。</li></ul><p>通过上述流程，你可以在 Hugging Face 生态下高效完成小模型的 LoRA 微调和推理，适用于个性化定制和低资源场景。</p><h2 id=要点总结>要点总结</h2><ul><li>LoRA 是什么：一种参数高效微调技术，通过增加小规模的低秩矩阵来调整模型，对原模型权重几乎零改动。直观理解：只学习“权重的差分”，并用极低的秩近似，达到几乎同等效果的同时，大幅减少训练开销。</li><li>参数占比与资源优势：LoRA 通常只需训练不到 1% 的参数甚至更少。这意味着微调大型模型不再需要数亿的可训练参数和对应显存。较小的显存/内存即可运行微调，例如 7B 模型用 LoRA 可在单张消费级 GPU 甚至 CPU 上以较短时间收敛。这降低了定制大模型的门槛。</li><li>效果与全微调对比：研究和实践表明，只要 LoRA 超参数选择得当（如秩、Alpha 等），LoRA 微调的效果能够接近全参数微调。同时，它保存下来的仅是适配器权重，小巧易部署；一个基础模型可以对应多个 LoRA 插件，根据不同任务动态加载，一模多用。</li><li>推理整合：LoRA 微调后的模型在推理时需要与原模型配合使用——这可以通过 PEFT 库的 <code>PeftModel</code> 方便地实现。推理开销几乎不变。对于生产环境，这种方法允许我们部署一个基底模型，再根据用户需求选择加载特定 LoRA 权重，大大节省内存。很多开源大模型社区实践（如对 LLaMA 的各种微调版）都是用 LoRA 发布的，这种方式也使得分享和复现他人微调成果更加轻量（只需几个 MB 的适配器文件）。</li><li>应用场景：当客户有自己的数据（FAQ 语料、行业文档等）希望在大模型基础上微调，LoRA 是首选方案之一。它能以最小成本将预训练模型个性化，例如定制客服机器人语气、特定领域问答等。而 Hugging Face 的 Transformers 和 PEFT 库提供了完整的工具链支持，从训练到部署非常便利。这也体现出在阿里云上，借助 PAI 平台或 Notebook，我们可以很快地 fine-tune 一个开源大模型并应用于业务。</li></ul><h2 id=总结>总结</h2><p>本文详细介绍了如何利用 Hugging Face Transformers 和 PEFT 库，通过 LoRA 技术实现大语言模型的高效微调。我们从原理、环境准备、完整代码流程到推理与参数量对比，系统梳理了 LoRA 的优势和应用场景。LoRA 让大模型微调变得轻量、灵活且低门槛，为个性化 AI 应用和行业定制提供了强大工具。未来，随着 PEFT 技术的不断发展，更多企业和开发者将能以更低成本享受大模型带来的智能红利。</p><p>创建于 2025/09/22 更新于 2025/11/02 4849 字 阅读约 10 分钟</p></main><aside class=af-toc-sidebar><div class=toc-title>内容导航</div><nav><nav id=TableOfContents><ul><li><ul><li><ul><li><a href=#大模型large-language-model>大模型（Large Language Model）</a></li><li><a href=#hugging-face>Hugging Face</a></li></ul></li></ul></li><li><a href=#背景原理与核心概念>背景原理与核心概念</a><ul><li><ul><li><a href=#fine-tuning微调>Fine-tuning（微调）</a></li><li><a href=#lora低秩自适应>LoRA（低秩自适应）</a></li><li><a href=#训练training>训练（Training）</a></li></ul></li></ul></li><li><a href=#安装与环境准备>安装与环境准备</a><ul><li><ul><li><a href=#peft参数高效微调>PEFT（参数高效微调）</a></li><li><a href=#gpu图形处理器>GPU（图形处理器）</a></li></ul></li></ul></li><li><a href=#微调与运行步骤>微调与运行步骤</a></li><li><a href=#推理方式与参数量对比>推理方式与参数量对比</a><ul><li><ul><li><a href=#参数高效微调parameter-efficient-fine-tuning>参数高效微调（Parameter-Efficient Fine-tuning）</a></li></ul></li></ul></li><li><a href=#完整示例>完整示例</a><ul><li><ul><li><a href=#prompt提示词>Prompt（提示词）</a></li><li><a href=#batch-size批次大小>Batch Size（批次大小）</a></li></ul></li></ul></li><li><a href=#要点总结>要点总结</a></li><li><a href=#总结>总结</a></li></ul></nav></nav></aside></div><div class=af-chapter-nav><div class=af-chapter-nav-inner><a href=https://martinsky999.github.io/ai-foundations/guide/playbook/ai-native-apps/ai-native-apps/ class="af-nav-item af-nav-prev"><span class=af-nav-label><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><path d="M19 12H5m7 7-7-7 7-7"/></svg>
+上一页
+</span><span class=af-nav-title>AI 原生应用架构简介 | Jimmy Song</span>
+</a><a href=https://martinsky999.github.io/ai-foundations/guide/playbook/llm-reference/llm-reference/ class="af-nav-item af-nav-next"><span class=af-nav-label>下一页
+<svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+</span><span class=af-nav-title>LLM 推理与调度实操：使用 vLLM + Ollama + FastAPI 构建本地问答服务并部署到 …</span></a></div></div><div class=af-article-meta-footer><div class=container><div class="af-chapter-meta af-chapter-meta--footer"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+6 分钟阅读
+</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+1216 字</span></div></div></div></div></div></div></main><footer class=site-footer><div class=footer-inner><div class=footer-grid><div class=footer-brand><a href=/ class=footer-logo><div class=logo-icon>元知</div><span class=logo-text>元知 AI</span></a><p class=footer-desc>元知 AI：关注 AI 工程、GPU 调度、推理服务与云原生实践。</p><div class=footer-social><a href=https://github.com/martinsky999 target=_blank rel=noopener aria-label=GitHub><svg viewBox="0 0 24 24" fill="currentcolor"><path d="M12 0C5.374.0.0 5.373.0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931.0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176.0.0 1.008-.322 3.301 1.23A11.509 11.509.0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221.0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a></div></div><div class=footer-col><h4>导航</h4><ul><li><a href=/blog/>博客</a></li><li><a href=/book/>图书</a></li><li><a href=/ai_discovery/>AI 开源</a></li><li><a href=/ai-foundations/deeplearning/>Analysis</a></li><li><a href=/archives/>归档</a></li></ul></div><div class=footer-col><h4>探索</h4><ul><li><a href=/blog/>博客</a></li><li><a href=/tags/>标签</a></li><li><a href=/about/>关于</a></li><li><a href=/ai_discovery/archived/>归档项目</a></li></ul></div><div class=footer-col><h4>联系</h4><ul><li><a href=https://github.com/martinsky999 target=_blank rel=noopener>GitHub</a></li><li><a href=/index.xml>RSS</a></li></ul></div></div><div class=footer-bottom><p class=footer-copyright>© 2026 元知 AI. 保留所有权利 ·
+<a href=https://creativecommons.org/licenses/by/4.0/ target=_blank rel=noopener>CC BY 4.0</a></p><div class=footer-powered><span>构建支持</span>
+<a href=https://cloudflare.com target=_blank rel=noopener>Cloudflare</a> ·
+<a href=https://gohugo.io target=_blank rel=noopener>Hugo</a> ·
+<a href=https://github.com target=_blank rel=noopener>GitHub</a></div></div></div></footer><script src=/js/main.min.eece1ef5a999dd4398c91dbabbee3f568592ae045cfb4ec62d2d4b29d719d3f8.js integrity="sha256-7s4e9amZ3UOYyR26u+4/VoWSrgRc+07GLS1LKdcZ0/g=" defer></script><script src=/js/search.min.44a4bef41029c2bc7d491f455778d262be3fb4cd0b2a1f5ce77fcfa29b281fe9.js integrity="sha256-RKS+9BApwrx9SR9FV3jSYr4/tM0LKh9c53/PopsoH+k=" defer></script></body></html>
